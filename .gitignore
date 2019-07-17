@@ -3,10 +3,13 @@
 node_modules/
 
 # Web Design directories
-Design\ Document/
+Design\ Document
 
 # Database directory
-database/
-!database/databaseHandler.js 
+Web\ Application/database/*
+!Web\ Application/database/databaseHandler.js
+
+
+
 
 
