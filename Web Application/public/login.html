@@ -1,1 +1,96 @@
-login page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="login.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-secondary text-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div class="navbar-brand"><img src="./images/Logo.png" height="50px"></div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item" style="position: absolute; right: 45%;">
+                    <h1 class="d-md-none d-sm-none d-none d-lg-block text-light">Cont-apps</h1>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./"><button type="button" class="btn btn-primary">Home</button></a>
+                </li>
+                <li class="nav-item active"> 
+                    <a class="nav-link" href="./login.html"><button type="button" class="btn btn-success">Login</button></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./aboutUs.html"><button type="button" class="btn btn-primary">About Us</button></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-4">
+                <div class="card mt-5" style="width: 18rem;">
+                    <div class="card-body text-dark">
+                        <h5 class="card-title">Login</h5>
+                        <form>
+                            <div class="form-group">
+                                <label for="loginUsername">Username</label>
+                                <input type="username" class="form-control" id="loginUsername" placeholder="Enter Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="loginPassword" placeholder="Enter Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <div class="col-lg-4"></div>
+            <div class="col-md-12 col-lg-4">
+                <div class="card mt-3" style="width: 18rem;">
+                    <div class="card-body text-dark">
+                        <h5 class="card-title">Sign Up</h5>
+                        <form>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="username" class="form-control" id="username" placeholder="Enter Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email" placeholder="Enter Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="retypePassword">Confirm Password</label>
+                                <input type="password" class="form-control" id="retypePassword" placeholder="Retype Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile">Mobile Number</label>
+                                <input type="number" class="form-control" id="mobile" placeholder="Enter Number">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                </div> 
+                <br>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
