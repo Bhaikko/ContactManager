@@ -16,7 +16,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-        <div class="navbar-brand"><img src="../images/Logo.png" height="50px"></div>
+        <div class="navbar-brand"><img src="../images/Logo.png" height="50px" style="border-radius: 0%;"></div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -41,20 +41,103 @@
 
     <div class="container mt-3">
         <div class="row">
-            <div class="col-4">
+            <div class="col-md-12 col-lg-4">
                 <div class="contactBox">
-                    <div class="inbox text-light bg-dark">
+                    <div class="contactsBox text-light bg-dark">
                         <h1>Contacts</h1>
                         <div class="divider bg-light"></div>
                         <div class="contacts">
-                            <div class="contact">Contact 1</div>
-                            <div class="contact">Contact 2</div>
-                            <div class="contact">Contact 3</div>
-                            <div class="contact">Contact 4</div>
-                            <div class="contact">Contact 5</div>
+                            <div class="list-group">
+                                <button type="button" class="list-group-item list-group-item-action active">
+                                    <img src="../images/profile.png">
+                                    Contact1
+                                </button>
+                                <button type="button" class="list-group-item list-group-item-action">
+                                    <img src="../images/profile.png">
+                                    Contact1
+                                </button>
+                                <button type="button" class="list-group-item list-group-item-action">
+                                    <img src="../images/profile.png">
+                                    Contact1
+                                </button>
+                                <button type="button" class="list-group-item list-group-item-action">
+                                    <img src="../images/profile.png">
+                                    Contact1
+                                </button>
+                                <button type="button" class="list-group-item list-group-item-action">
+                                    <img src="../images/profile.png">
+                                    Contact1
+                                </button>
+                                <button type="button" class="list-group-item list-group-item-action">
+                                    <img src="../images/profile.png">
+                                    Contact1
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <br>
+            </div>
+
+            <div class="col-2"></div>
+
+            <div class="col-md-12 col-lg-6 ">
+                <div class="contactBox">
+                    <div class="inboxBox text-light bg-dark">
+                        <h1>Inbox</h1>
+                        <div class="divider bg-light"></div>
+                        <div class="inbox">
+                            <div class="header mt-3">
+                                <img src="../images/profile.png">
+                                <div class="senderName">Contact 1</div>   
+                            </div>
+
+                            <div class="messagesBox bg-light text-dark mt-2 mb-4">
+                                <div class="myMessage bg-success text-light">
+                                    Hillu
+                                    <div class="time text-dark bg-info">00:00, 01 - 01 - 1970</div>
+                                </div>
+                                <div class="notMyMessage bg-secondary text-light">
+                                    Hi
+                                    <div class="time text-dark bg-info">00:00, 01 - 01 - 1970</div>
+                                </div>
+                                <div class="myMessage bg-success text-light">
+                                    How Are you my Friend
+                                    <div class="time text-dark bg-info">00:00, 01 - 01 - 1970</div>    
+                                </div>
+                                <div class="notMyMessage bg-secondary text-light">
+                                    Not Fine
+                                    <div class="time text-dark bg-info">00:00, 01 - 01 - 1970</div>
+                                </div>
+                                <div class="myMessage bg-success text-light">
+                                    Nice
+                                    <div class="time text-dark bg-info">00:00, 01 - 01 - 1970</div>
+                                </div>
+                                <div class="notMyMessage bg-secondary text-light">
+                                    Nice
+                                    <div class="time text-dark bg-info">00:00, 01 - 01 - 1970</div>
+                                </div>
+                                <div class="myMessage bg-success text-light">
+                                    Nice
+                                    <div class="time text-dark bg-info">00:00, 01 - 01 - 1970</div>
+                                </div>
+                                <div class="notMyMessage bg-secondary text-light">
+                                    Nice
+                                    <div class="time text-dark bg-info">00:00, 01 - 01 - 1970</div>
+                                </div>
+                                <div class="notMyMessage bg-secondary text-light">
+                                    Nice
+                                    <div class="time text-dark bg-info">00:00, 01 - 01 - 1970</div>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="sendBox mt-3">
+                                <textarea type="text" class="form-control" id="inputMessage" placeholder="Type Message" ></textarea>
+                                <button type="button" class="btn btn-primary" style="display: inline-block;">Send Message</button> 
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
