@@ -1,0 +1,19 @@
+.divider
+{
+    width: 100%;
+    height: 2px;
+}
+
+.newContactBox
+{
+    width: 1000px;
+    display: inline-block;
+    border-radius: 5%;
+    margin-left: 175px;
+}
+
+.name 
+{
+    display: inline-block;
+    width: 250px;
+}

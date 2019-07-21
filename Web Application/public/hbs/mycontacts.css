@@ -1,7 +1,6 @@
 .contact 
 {
     display: inline-block;
-    /* position: relative; */
     border-radius: 20%;
     height: 300px;
     width: 250px;
@@ -79,7 +78,7 @@ table
     font-size: 10px;
 }
 
-.btn 
+.contact .btn 
 {
     font-size: 10px;
 }
