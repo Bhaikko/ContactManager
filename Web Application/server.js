@@ -1,4 +1,6 @@
 const express = require("express");
+const sqlDatabaseHandler = require("./database/sqlDatabaseHandler");
+
 const server = express();
 
 server.set("view engine", "hbs");
@@ -17,5 +19,12 @@ server.get("/mycontacts", function(req, res, next)
     res.render("mycontacts");
 });
 
-let port = 4000;
-server.listen(port, () => console.log("Server Up And Running On 127.0.0.1:" + port));
+
+sqlDatabaseHandler.database.sync()
+.then(function()
+{
+    console.log("SQL Database Synced");
+    let port = 4000;
+    server.listen(port, () => console.log("Server Up And Running On 127.0.0.1:" + port));
+});
+
