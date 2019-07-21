@@ -1,0 +1,60 @@
+.contact 
+{
+    display: inline-block;
+    position: relative;
+    border-radius: 20%;
+    height: 300px;
+    width: 250px;
+    box-shadow: 2px 2px grey;
+}
+
+.front 
+{
+    margin-top: 20px;
+}
+
+.back>div 
+{
+    display: inline-block;
+}
+
+.frontImage>img
+{
+    border-radius: 30%;
+    width: 150px;
+    margin-left: 15%;
+}
+
+.frontName
+{
+    font-size: 30px;
+    margin-left: 25%;
+    margin-top: 40px;
+}
+
+.backImage>img
+{
+    display: inline-block;
+    border-radius: 20%;
+    margin-left: 20%;
+    width: 80px;
+  
+}
+
+.backKey 
+{
+    margin-top: 5px;
+    font-weight: bolder;
+}
+
+table  
+{
+    margin-top: 20px;
+    font-size: 10px;
+}
+
+.btn 
+{
+    /* display: inline-block; */
+    font-size: 10px;
+}
