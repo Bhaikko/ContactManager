@@ -7,7 +7,7 @@ Design\ Document
 
 # Database directory
 Web\ Application/database/*
-!Web\ Application/database/databaseHandler.js
+!Web\ Application/database/sqlDatabaseHandler.js
 
 
 
