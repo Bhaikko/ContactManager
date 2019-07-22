@@ -3,6 +3,8 @@ const sqlDatabaseHandler = require("./database/sqlDatabaseHandler");
 const session = require("express-session");
 const passport = require("./passport");
 
+const contactsRouter = require("./routes/contacts");
+
 const server = express();
 
 server.set("view engine", "hbs");
@@ -15,29 +17,28 @@ server.use(session({
     secret: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF FFFFFF",
     resave: false,
     saveUninitialized: true,
-    cookie: {
-        maxAge: 1000 * 60
-    }
+    // cookie: {
+    //     maxAge: 1000 * 60
+    // }
 }));
 
 server.use(passport.initialize());
 server.use(passport.session());
 
-
-server.get("/myhomepage", function(req, res, next)
-{
-    res.render("myhomepage");
-});
-
-server.get("/mycontacts", function(req, res, next)
-{
-    res.render("mycontacts");
-});
-
 server.post("/login", passport.authenticate("local", {
-    successRedirect: "/myhomepage",
+    successRedirect: "/profile",
     failureRedirect: "/login.html"
 }));
+
+function checkLoggedIn(req, res, next)
+{
+    if(req.user)
+        return next();
+
+    res.redirect("/login.html");
+}
+
+server.use("/profile", checkLoggedIn, contactsRouter);
 
 
 server.post("/signup", function(req, res)

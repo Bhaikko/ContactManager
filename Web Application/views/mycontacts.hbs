@@ -29,10 +29,10 @@
                     <a class="nav-link" href="./../newContact.html"><button type="button" class="btn btn-primary">New Contact</button></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/myhomepage"><button type="button" class="btn btn-primary">Inbox</button></a>
+                    <a class="nav-link" href="/profile"><button type="button" class="btn btn-primary">Inbox</button></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/mycontacts"><button type="button" class="btn btn-success">All Contacts</button></a>
+                    <a class="nav-link" href="/profile/mycontacts"><button type="button" class="btn btn-success">All Contacts</button></a>
                 </li>
                 
                 <li class="nav-item">
@@ -45,50 +45,49 @@
 
     <div class="container mt-4">
         <div class="row">
+            {{#each renderingContacts as |contact|}}
             <div class="col">
                 <div class="contact bg-dark text-light p-3">
-                    <div class="front">
-                        <div class="frontImage"><img src="../images/profile.png"></div>
-                        <div class="frontName"><u>Bhaikko</u></div>
-                    </div>
-                    <div class="back">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="backImage"><img src="../images/profile.png"></div>
-                                </div>
-                                <div class="col" style="margin-left: 10px">
-                                    <button type="button" class="btn btn-warning">Edit</button><br>
-                                    <button type="button" class="btn btn-danger" style="margin-top: 20px;">Delete</button>
+                   
+                        <div class="front">
+                            <div class="frontImage"><img src="../images/profile.png"></div>
+                            <div class="frontName"><u>{{contact.firstName}}</u></div>
+                        </div>
+                        <div class="back">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="backImage"><img src="../images/profile.png"></div>
+                                    </div>
+                                    <div class="col" style="margin-left: 10px">
+                                        <button type="button" class="btn btn-warning">Edit</button><br>
+                                        <button type="button" class="btn btn-danger" style="margin-top: 20px;">Delete</button>
+                                    </div>
                                 </div>
                             </div>
+                            
+                            <table class="table table-striped text-light">
+                                <tr>
+                                    <th>Name: </th>
+                                    <td>{{contact.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone: </th>
+                                    <td>{{contact.phone}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address: </th>
+                                    <td>{{contact.address}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email: </th>
+                                    <td>{{contact.email}}</td>
+                                </tr>
+                            </table>
                         </div>
-                        
-                        <table class="table table-striped text-light">
-                            <tr>
-                                <th>Name: </th>
-                                <td>Bhaikko</td>
-                            </tr>
-                            <tr>
-                                <th>Phone: </th>
-                                <td>1234567890</td>
-                            </tr>
-                            <tr>
-                                <th>Address: </th>
-                                <td>HouseNO, Locality, City, State - 999999</td>
-                            </tr>
-                            <tr>
-                                <th>Email: </th>
-                                <td>abcdefghijkl@gmail.com</td>
-                            </tr>
-                        </table>
-                        
-                    </div>
-                    
                 </div>
             </div>
-            
-            
+            {{/each}}
         </div>
     </div>
 </body>

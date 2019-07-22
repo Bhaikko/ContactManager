@@ -11,14 +11,17 @@ loginButton.click(function(event)
     let loginUsername = $("#loginUsername").val();
     let loginPassword = $("#loginPassword").val();
 
-    if (!loginUsername)
+    if (loginUsername == "")
     {
-        console.log("Enter Username");
+        hideAllSmallElement();
+        $("#usernameError").removeAttr("hidden");
+        
         return;
     }
-    else if(!loginPassword)
+    else if(loginPassword == "")
     {
-        console.log("Enter Password");
+        hideAllSmallElement();
+        $("#passwordError").removeAttr("hidden");
         return;
     }
     else 
@@ -28,7 +31,6 @@ loginButton.click(function(event)
 
 signupButton.click(function(event)
 {
-    console.log("Inside");
     event.preventDefault();
 
     let username = $("#username").val();
@@ -38,22 +40,26 @@ signupButton.click(function(event)
     
     if(username == "")
     {
-        console.log("Enter Username");
-        return;
-    }
-    else if (password == "")
-    {
-        console.log("Enter Password");
+        hideAllSmallElement();
+        $("#signupUsernameError").removeAttr("hidden");
         return;
     }
     else if (mobile == "")
     {
-        console.log("Enter Mobile Number");
+        hideAllSmallElement();
+        $("#signupMobileError").removeAttr("hidden");
+        return;
+    }
+    else if (password == "")
+    {
+        hideAllSmallElement();
+        $("#signupPasswordError").removeAttr("hidden");
         return;
     }
     else if (password != retypePassword)
     {
-        console.log("Passwords do not match");
+        hideAllSmallElement();
+        $("#signupRetypePassword").removeAttr("hidden");
         return;
     }    
     else 
@@ -62,3 +68,12 @@ signupButton.click(function(event)
     }
 
 });
+
+function hideAllSmallElement()
+{
+    smalls = $("small");
+    smalls.each(function(index)
+    {
+        $(this)[0].setAttribute("hidden", "true");
+    });
+}
