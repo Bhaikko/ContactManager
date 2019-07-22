@@ -35,7 +35,10 @@ const Users = database.define("users", {
 function addUser(username, password, mobile)
 {
     return Users.findOne({
-        username
+        where: {
+            username
+        }
+        
     })
     .then(function(user)
     {

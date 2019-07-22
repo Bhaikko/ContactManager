@@ -3,11 +3,11 @@ const LocalStrategy = require("passport-local").Strategy;
 const Users = require("./database/sqlDatabaseHandler").Users;
 
 passport.use(
-    new LocalStrategy(function (loginUsername, loginPassword, done)
+    new LocalStrategy(function (username, password, done)
     {
         Users.findOne({
             where: {
-                username: loginUsername 
+                username 
             }
         })
         .then(function(user)
@@ -15,7 +15,7 @@ passport.use(
             if(!user)
                 return done(new Error("Username Invalid"));
 
-            if(user.password != loginPassword)
+            if(user.password != password)
                 return done(null, false);
 
             done(null, user);

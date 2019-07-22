@@ -1,15 +1,15 @@
 
-let loginButton = $("login");
-let loginForm = $("loginForm");
+let loginButton = $("#login");
+let loginForm = $("#loginForm");
 
-let signupButton = $("signup");
-let signupForm = $("signupForm");
+let signupButton = $("#signup");
+let signupForm = $("#signupForm");
 
 loginButton.click(function(event)
 {
     event.preventDefault();
-    let loginUsername = $("#loginUsername");
-    let loginPassword = $("#loginPassword");
+    let loginUsername = $("#loginUsername").val();
+    let loginPassword = $("#loginPassword").val();
 
     if (!loginUsername)
     {
@@ -26,35 +26,36 @@ loginButton.click(function(event)
 
 });
 
-signupForm.click(function(event)
+signupButton.click(function(event)
 {
+    console.log("Inside");
     event.preventDefault();
 
-    let username = $("#username");
-    let password = $("#password");
-    let retypePassword = $("#retypePassword");
-    let mobile = $("#mobile");
+    let username = $("#username").val();
+    let password = $("#password").val();
+    let retypePassword = $("#retypePassword").val();
+    let mobile = $("#mobile").val();
     
-    if(!username)
+    if(username == "")
     {
         console.log("Enter Username");
         return;
     }
-    else if (!password)
+    else if (password == "")
     {
         console.log("Enter Password");
+        return;
+    }
+    else if (mobile == "")
+    {
+        console.log("Enter Mobile Number");
         return;
     }
     else if (password != retypePassword)
     {
         console.log("Passwords do not match");
         return;
-    }   
-    else if (!mobile)
-    {
-        console.log("Enter Mobile Number");
-        return;
-    }
+    }    
     else 
     {
         signupForm.submit();

@@ -39,9 +39,9 @@ server.post("/login", passport.authenticate("local", {
     failureRedirect: "/login.html"
 }));
 
+
 server.post("/signup", function(req, res)
 {
-    console.log(req.body);
     sqlDatabaseHandler.addUser(req.body.username, req.body.password, req.body.mobile)
     .then(function(response)
     {
