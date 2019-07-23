@@ -1,9 +1,16 @@
+//npm packages
 const express = require("express");
-const sqlDatabaseHandler = require("./database/sqlDatabaseHandler");
 const session = require("express-session");
+const fs = require("fs");
+
+//Handlers
+const sqlDatabaseHandler = require("./database/sqlDatabaseHandler");
 const passport = require("./passport");
 
+//Routers
 const contactsRouter = require("./routes/contacts");
+
+
 
 const server = express();
 
@@ -46,10 +53,16 @@ server.post("/signup", function(req, res)
     .then(function(response)
     {
         if(response == "User Already Exist")
+        {
             console.log("User Already Exist");
+        }
         else 
-            console.log("New User: " + req.body.username + " Added");
-        
+        {
+            fs.mkdir("./public/uploads/" + req.body.username, function(err, dir)
+            {
+                console.log("New User: " + req.body.username + " Added");
+            });
+        }
         res.redirect("/login.html");
     });
 });

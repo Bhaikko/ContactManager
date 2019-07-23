@@ -34,7 +34,7 @@
                     <a class="nav-link" href="/profile"><button type="button" class="btn btn-primary">Inbox</button></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile/mycontacts"><button type="button" class="btn btn-primary">All Contacts</button></a>
+                    <a class="nav-link" href="/profile/contacts"><button type="button" class="btn btn-primary">All Contacts</button></a>
                 </li>
                 
                 <li class="nav-item">
@@ -47,7 +47,7 @@
     <div class="newContactBox bg-dark text-light p-5 mt-3">
         <h1>New Contact</h1>
         <div class="divider bg-dark "></div>
-        <form method="POST" action="/profile/addContact">
+        <form method="POST" action="/profile/addContact" enctype="multipart/form-data">
             <table class="table table-striped text-light">
                 <tr>
                     <div class="form-group">
@@ -55,9 +55,9 @@
                             <label for="firstName">Name</label>
                         </th>
                         <td>
-                            <input type="text" class="form-control name" id="firstName" placeholder="First Name">
-                            <input type="text" class="form-control name" id="middleName" placeholder="Middle Name">
-                            <input type="text" class="form-control name" id="lastName" placeholder="Last Name">
+                            <input type="text" name="firstName" class="form-control name" id="firstName" placeholder="First Name" required>
+                            <input type="text" name="middleName" class="form-control name" id="middleName" placeholder="Middle Name">
+                            <input type="text" name="LastName" class="form-control name" id="lastName" placeholder="Last Name">
                         </td>  
                     </div>
                 </tr>  
@@ -68,7 +68,7 @@
                             <label for="phone">Phone</label>
                         </th>
                         <td>
-                            <input type="number" class="form-control name" id="phone" placeholder="Mobile Number">
+                            <input type="number" name="phone" class="form-control name" id="phone" placeholder="Mobile Number" required>
                         </td>  
                     </div>
                 </tr>
@@ -79,11 +79,11 @@
                             <label for="house">Address</label>
                         </th>
                         <td>
-                            <input type="text" class="form-control name" id="house" placeholder="House Number">
-                            <input type="text" class="form-control name" id="locality" placeholder="Locality"><br>
-                            <input type="text" class="form-control name" id="city" placeholder="City">
-                            <input type="text" class="form-control name" id="state" placeholder="State">
-                            <input type="text" class="form-control name" id="pin" placeholder="Pin Code">
+                            <input type="text" name="houseNumber" class="form-control name" id="house" placeholder="House Number">
+                            <input type="text" name="locality" class="form-control name" id="locality" placeholder="Locality"><br>
+                            <input type="text" name="city" class="form-control name" id="city" placeholder="City">
+                            <input type="text" name="state" class="form-control name" id="state" placeholder="State">
+                            <input type="number" name="pincode" class="form-control name" id="pin" placeholder="Pin Code">
                         </td>  
                     </div>
                 </tr>
@@ -93,7 +93,7 @@
                             <label for="email">E-mail</label>
                         </th>
                         <td>
-                            <input type="email" class="form-control name" id="email" placeholder="Email">
+                            <input type="email" name="email" class="form-control name" id="email" placeholder="Email">
                         </td>  
                     </div>
                 </tr>
@@ -103,7 +103,7 @@
                             <label for="profile">Photo</label>
                         </th>
                         <td>
-                            <input type="file" accept="image/*">
+                            <input name="profile" type="file" accept="image/*">
                             <button type="submit" class="btn btn-primary">Add To My Contacts</button>
                         </td>  
                     </div>
