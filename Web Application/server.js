@@ -40,7 +40,6 @@ function checkLoggedIn(req, res, next)
 
 server.use("/profile", checkLoggedIn, contactsRouter);
 
-
 server.post("/signup", function(req, res)
 {
     sqlDatabaseHandler.addUser(req.body.username, req.body.password, req.body.mobile)
