@@ -32,13 +32,38 @@ const Users = database.define("users", {
 
 });
 
+const Contacts = database.define("contacts", {
+    username: {
+        type: Sequelize.STRING,
+        primaryKey: true,
+        allowNull: false 
+    },
+    name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    phone: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    address: {
+        type: Sequelize.STRING
+    },
+    email: {
+        type: Sequelize.STRING 
+    },
+    profile:{
+        type: Sequelize.STRING,
+        allowNull: false 
+    }
+});
+
 function addUser(username, password, mobile)
 {
     return Users.findOne({
         where: {
             username
         }
-        
     })
     .then(function(user)
     {
@@ -58,4 +83,41 @@ function addUser(username, password, mobile)
     .catch(console.log);
 }
 
-module.exports = {  database, Users, addUser};
+function addContact(username, name, phone, address, email, profile)
+{
+    return Contacts.findOne({
+        where: {
+            phone 
+        }
+    })
+    .then(function(contact)
+    {
+        if(!contact)
+        {
+            return Contacts.create({
+                username,
+                name,
+                phone,
+                address,
+                email,
+                profile 
+            });
+        }
+        else 
+        {
+            return "Contact Already Exist";
+        }
+    })
+    .catch(console.log);
+}
+
+function getContacts(username)
+{
+    return Contacts.findAll({
+        where: {
+            username
+        }
+    });
+}
+
+module.exports = {  database, Users, Contacts, addUser, addContact, getContacts};
