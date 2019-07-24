@@ -120,4 +120,5 @@ function getContacts(username)
     });
 }
 
+
 module.exports = {  database, Users, Contacts, addUser, addContact, getContacts};

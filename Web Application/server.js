@@ -1,6 +1,7 @@
 //npm packages
 const express = require("express");
 const session = require("express-session");
+const flash = require("connect-flash");
 const fs = require("fs");
 
 //Handlers
@@ -10,13 +11,12 @@ const passport = require("./passport");
 //Routers
 const contactsRouter = require("./routes/contacts");
 
-
-
 const server = express();
 
 server.set("view engine", "hbs");
 server.use(express.json());
 server.use(express.urlencoded({extended: true}));
+
 
 server.use(express.static("./public"));
 
@@ -31,10 +31,12 @@ server.use(session({
 
 server.use(passport.initialize());
 server.use(passport.session());
+server.use(flash());
 
 server.post("/login", passport.authenticate("local", {
     successRedirect: "/profile",
-    failureRedirect: "/login.html"
+    failureRedirect: "/login.html",
+    failureFlash: true
 }));
 
 function checkLoggedIn(req, res, next)

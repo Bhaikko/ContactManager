@@ -13,10 +13,10 @@ passport.use(
         .then(function(user)
         {
             if(!user)
-                return done(new Error("Username Invalid"));
+                return done(null, false, {message: "No Username Exists"});
 
             if(user.password != password)
-                return done(null, false);
+                return done(null, false, {message: "Wrong Password"});
 
             done(null, user);
         })
