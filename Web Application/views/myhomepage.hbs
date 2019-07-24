@@ -35,9 +35,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/profile/contacts"><button type="button" class="btn btn-primary">All Contacts</button></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/"><button type="button" class="btn btn-danger">Sign Out</button></a>
-                </li>
+                <form action="/logout" method="GET">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><button type="submit" class="btn btn-danger">Sign Out</button></a>
+                    </li>
+                </form>
+                
             </ul>
         </div>
     </nav>
@@ -51,30 +54,14 @@
                         <div class="divider bg-light"></div>
                         <div class="contacts">
                             <div class="list-group">
-                                <button type="button" class="list-group-item list-group-item-action active">
-                                    <img src="../images/profile.png">
-                                    Contact1
-                                </button>
-                                <button type="button" class="list-group-item list-group-item-action">
-                                    <img src="../images/profile.png">
-                                    Contact1
-                                </button>
-                                <button type="button" class="list-group-item list-group-item-action">
-                                    <img src="../images/profile.png">
-                                    Contact1
-                                </button>
-                                <button type="button" class="list-group-item list-group-item-action">
-                                    <img src="../images/profile.png">
-                                    Contact1
-                                </button>
-                                <button type="button" class="list-group-item list-group-item-action">
-                                    <img src="../images/profile.png">
-                                    Contact1
-                                </button>
-                                <button type="button" class="list-group-item list-group-item-action">
-                                    <img src="../images/profile.png">
-                                    Contact1
-                                </button>
+                                {{#each contacts as |contact|}}
+                                    <div>
+                                        <button type="button" class="list-group-item list-group-item-action">
+                                        <img src={{contact.profile}}>
+                                        {{contact.name}}
+                                        </button>
+                                    </div>
+                                {{/each}}
                             </div>
                         </div>
                     </div>

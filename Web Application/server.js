@@ -38,10 +38,13 @@ server.post("/login", passport.authenticate("local", {
 
 function checkLoggedIn(req, res, next)
 {
-    if(req.user)
-        return next();
-
-    res.redirect("/login.html");
+    if(!req.user)
+    {
+        res.redirect("/login.html");
+        return;
+    }
+        
+    next();    
 }
 
 server.use("/profile", checkLoggedIn, contactsRouter);
@@ -66,6 +69,11 @@ server.post("/signup", function(req, res)
     });
 });
 
+server.get("/logout", function(req, res)
+{
+    req.logOut();
+    res.redirect("/");
+})
 
 sqlDatabaseHandler.database.sync()
 .then(function()

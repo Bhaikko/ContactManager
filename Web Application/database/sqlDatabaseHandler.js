@@ -111,13 +111,26 @@ function addContact(username, name, phone, address, email, profile)
     .catch(console.log);
 }
 
-function getContacts(username)
+function getContacts(username, bFrontPage)
 {
-    return Contacts.findAll({
-        where: {
-            username
-        }
-    });
+    if(bFrontPage)
+    {
+        return Contacts.findAll({
+            attributes: ["name", "profile"],
+            where: {
+                username
+            }
+
+        })
+    }
+    else (!bFrontPage)
+    {
+        return Contacts.findAll({
+            where: {
+                username
+            }
+        });
+    }
 }
 
 

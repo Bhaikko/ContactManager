@@ -19,14 +19,25 @@ const route = express.Router();
 route.get("/", function(req, res, next)
 {
     let name = req.user.username;
-    res.render("myhomepage", {name});
+    let renderingContacts = [];
+
+    sqlDatabaseHandler.getContacts(req.user.username, true)
+    .then(function(contacts)
+    {
+        contacts.map(function(contact)
+        {
+            contact.name = contact.name.split(" ")[0];
+        });
+        res.render("myhomepage", {name, contacts});
+    });
+
 });
 
 route.get("/contacts", function(req, res, next)
 {
     let username = req.user.username;
     let renderingContacts = [];
-    sqlDatabaseHandler.getContacts(req.user.username)
+    sqlDatabaseHandler.getContacts(req.user.username, false)
     .then(function(contacts)
     {   
         renderingContacts = contacts;
