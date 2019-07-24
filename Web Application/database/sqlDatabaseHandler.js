@@ -35,7 +35,6 @@ const Users = database.define("users", {
 const Contacts = database.define("contacts", {
     username: {
         type: Sequelize.STRING,
-        primaryKey: true,
         allowNull: false 
     },
     name: {
@@ -44,6 +43,7 @@ const Contacts = database.define("contacts", {
     },
     phone: {
         type: Sequelize.STRING,
+        primaryKey: true,
         allowNull: false,
     },
     address: {

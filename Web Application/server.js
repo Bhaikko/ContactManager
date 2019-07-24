@@ -1,7 +1,6 @@
 //npm packages
 const express = require("express");
 const session = require("express-session");
-const flash = require("connect-flash");
 const fs = require("fs");
 
 //Handlers
@@ -24,19 +23,17 @@ server.use(session({
     secret: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF FFFFFF",
     resave: false,
     saveUninitialized: true,
-    // cookie: {
-    //     maxAge: 1000 * 60
-    // }
+    cookie: {
+        maxAge: 1000 * 60 * 60
+    }
 }));
 
 server.use(passport.initialize());
 server.use(passport.session());
-server.use(flash());
 
 server.post("/login", passport.authenticate("local", {
     successRedirect: "/profile",
-    failureRedirect: "/login.html",
-    failureFlash: true
+    failureRedirect: "/login.html"
 }));
 
 function checkLoggedIn(req, res, next)

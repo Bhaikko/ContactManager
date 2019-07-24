@@ -18,11 +18,13 @@ const route = express.Router();
 
 route.get("/", function(req, res, next)
 {
-    res.render("myhomepage");
+    let name = req.user.username;
+    res.render("myhomepage", {name});
 });
 
 route.get("/contacts", function(req, res, next)
 {
+    let username = req.user.username;
     let renderingContacts = [];
     sqlDatabaseHandler.getContacts(req.user.username)
     .then(function(contacts)
@@ -32,34 +34,31 @@ route.get("/contacts", function(req, res, next)
         {
             current.firstName = contacts[index].name.split(" ")[0];
         });
-
-
-        res.render("mycontacts", { renderingContacts});
+        res.render("mycontacts", { renderingContacts, username});
     });
 })
 
 route.post("/addContact", uploadHandler.upload.single("profile"), function(req, res, next)
 {
     let newContact = {
-        name: req.body.firstName + " \" " + req.body.middleName + " \" " + req.body.lastName,
+        name: req.body.firstName,
         phone: req.body.phone,
         address: req.body.houseNumber + " " + req.body.locality + " " + req.body.city + " " + req.body.state + " " + req.body.pincode,
         email: req.body.email,
     };
+    if(req.body.middleName)
+        newContact.name += " \" " + req.body.middleName + " \" ";
+    if(req.body.lastName)
+        newContact.name += req.body.lastName;
     
     require("fs").access(__dirname + "/../public/uploads/" + req.user.username + "/" + req.body.phone, function(err)
     {
-        console.log("inside");
         if(!err)
             newContact["profile"] = "./../uploads/" + req.user.username + "/" + req.body.phone;
         else
             newContact["profile"] = "./../uploads/profile.png";
     
-        sqlDatabaseHandler.addContact(req.user.username, newContact.name, newContact.phone, newContact.address, newContact.email, newContact.profile)
-        .then(function(result)
-        {
-            console.log("New Contact Added By " + req.user.username);
-        });
+        sqlDatabaseHandler.addContact(req.user.username, newContact.name, newContact.phone, newContact.address, newContact.email, newContact.profile);
         res.redirect("/profile/contacts");
         return;
         
