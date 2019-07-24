@@ -133,5 +133,19 @@ function getContacts(username, bFrontPage)
     }
 }
 
+function patchContacts(name, phone, address, email)
+{
+    return Contacts.update({
+        name,
+        phone,
+        address,
+        email
+    },
+    {
+        where:  {
+            phone
+        }
+    });
+}
 
-module.exports = {  database, Users, Contacts, addUser, addContact, getContacts};
+module.exports = {  database, Users, Contacts, addUser, addContact, getContacts, patchContacts};

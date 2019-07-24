@@ -76,4 +76,9 @@ route.post("/addContact", uploadHandler.upload.single("profile"), function(req, 
     });
 });
 
+route.patch("/patchContact", function(req, res)
+{
+    sqlDatabaseHandler.patchContacts(req.body.name, req.body.phone, req.body.address, req.body.email);
+});
+
 module.exports = route;

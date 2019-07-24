@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../hbs/mycontacts.css">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script  src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
@@ -62,8 +63,8 @@
                                             <div class="backImage"><img src={{contact.profile}}></div>
                                         </div>
                                         <div class="col" style="margin-left: 10px">
-                                            <button type="button" class="btn btn-warning">Edit</button><br>
-                                            <button type="button" class="btn btn-danger" style="margin-top: 20px;">Delete</button>
+                                            <button type="button" class="btn btn-warning editButton">Edit</button><br>
+                                            <button type="button" class="btn btn-danger deleteButton" style="margin-top: 20px;">Delete</button>
                                         </div>
                                     </div>
                                 </div>
@@ -71,19 +72,19 @@
                                 <table class="table table-striped text-light">
                                     <tr>
                                         <th>Name: </th>
-                                        <td>{{contact.name}}</td>
+                                        <td class="value" contenteditable="false">{{contact.name}}</td>
                                     </tr>
                                     <tr>
                                         <th>Phone: </th>
-                                        <td>{{contact.phone}}</td>
+                                        <td class="value" contenteditable="false">{{contact.phone}}</td>
                                     </tr>
                                     <tr>
                                         <th>Address: </th>
-                                        <td>{{contact.address}}</td>
+                                        <td class="value" contenteditable="false">{{contact.address}}</td>
                                     </tr>
                                     <tr>
                                         <th>Email: </th>
-                                        <td>{{contact.email}}</td>
+                                        <td class="value" contenteditable="false">{{contact.email}}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -92,5 +93,7 @@
             {{/each}}
         </div>
     </div>
+
+    <script src="../hbs/mycontacts.js"></script>
 </body>
 </html>
