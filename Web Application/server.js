@@ -69,6 +69,15 @@ server.post("/signup", function(req, res)
     });
 });
 
+server.get("/getUser", function(req, res, next)
+{
+    sqlDatabaseHandler.getUser(req.query.username)
+    .then(function(user)
+    {
+        res.send(user);
+    });
+})
+
 server.get("/logout", function(req, res)
 {
     req.logOut();

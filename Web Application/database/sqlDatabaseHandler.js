@@ -5,7 +5,6 @@ const Sequelize = require("sequelize");
 
 const database = new Sequelize("contactmanager", "contactManagerAdmin", "123456",{
     host: "localhost",
-    // port: 3306,
     dialect: "mysql",
     logging: false 
 });
@@ -57,6 +56,16 @@ const Contacts = database.define("contacts", {
         allowNull: false 
     }
 });
+
+function getUser(username)
+{
+    return Users.findAll({
+        attributes: ["username"],
+        where: {
+            username
+        }
+    });
+}
 
 function addUser(username, password, mobile)
 {
@@ -133,11 +142,11 @@ function getContacts(username, bFrontPage)
     }
 }
 
-function patchContacts(name, phone, address, email)
+function patchContacts(username ,name, phone, address, email)
 {
     return Contacts.update({
+        username,
         name,
-        phone,
         address,
         email
     },
@@ -148,4 +157,14 @@ function patchContacts(name, phone, address, email)
     });
 }
 
-module.exports = {  database, Users, Contacts, addUser, addContact, getContacts, patchContacts};
+function deleteContact(username, phone)
+{
+    return Contacts.destroy({
+        where:  {
+            username,
+            phone
+        }
+    });
+}
+
+module.exports = {  database, Users, Contacts, addUser, addContact, getContacts, patchContacts, getUser, deleteContact};

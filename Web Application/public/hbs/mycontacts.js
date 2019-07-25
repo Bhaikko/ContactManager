@@ -49,3 +49,23 @@ editButtons.each(function(index)
 
     });
 });
+
+deleteButtons.each(function(index)
+{
+    deleteButtons[index].addEventListener("click", function(event)
+    {
+        let parentContainer = event.target.parentNode.parentNode.parentNode.parentNode;
+        let rows = parentContainer.children[1].children[0].children;
+        let containerToDelete = parentContainer.parentNode.parentNode;
+
+        jQuery.ajax({
+            type: "DELETE",
+            url: "/profile/deleteContact",
+            data: {
+                phone: rows[1].children[1].innerText
+            }                        
+        });
+        
+        containerToDelete.remove();
+    });
+});

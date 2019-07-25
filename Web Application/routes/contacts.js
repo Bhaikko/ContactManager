@@ -19,8 +19,6 @@ const route = express.Router();
 route.get("/", function(req, res, next)
 {
     let name = req.user.username;
-    let renderingContacts = [];
-
     sqlDatabaseHandler.getContacts(req.user.username, true)
     .then(function(contacts)
     {
@@ -78,7 +76,12 @@ route.post("/addContact", uploadHandler.upload.single("profile"), function(req, 
 
 route.patch("/patchContact", function(req, res)
 {
-    sqlDatabaseHandler.patchContacts(req.body.name, req.body.phone, req.body.address, req.body.email);
+    sqlDatabaseHandler.patchContacts(req.user.username ,req.body.name, req.body.phone, req.body.address, req.body.email);
+});
+
+route.delete("/deleteContact", function(req, res)
+{
+    sqlDatabaseHandler.deleteContact(req.user.username, req.body.phone);
 });
 
 module.exports = route;

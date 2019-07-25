@@ -25,8 +25,21 @@ loginButton.click(function(event)
         return;
     }
     else 
-        loginForm.submit();
-
+    {
+        jQuery.get("/getUser?username=" + loginUsername, function(user)
+        {
+            if(user.length == 1)
+            {
+                loginForm.submit();
+            }
+            else 
+            {
+                $("#loginError").removeAttr("hidden");
+                return;
+            }
+                
+        });        
+    }
 });
 
 signupButton.click(function(event)
@@ -64,7 +77,17 @@ signupButton.click(function(event)
     }    
     else 
     {
-        signupForm.submit();
+        jQuery.get("/getUser?username=" + username, function(user)
+        {
+            if(user.length == 1)
+            {
+                $("#signupUsernameExist").removeAttr("hidden");
+                return;
+            }
+            else 
+                signupForm.submit();
+        });
+        
     }
 
 });
