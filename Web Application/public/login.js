@@ -26,7 +26,10 @@ loginButton.click(function(event)
     }
     else 
     {
-        jQuery.get("/getUser?username=" + loginUsername, function(user)
+        jQuery.post("/checkUser",{
+            username: loginUsername,
+            password: loginPassword
+        }, function(user)
         {
             if(user.length == 1)
             {

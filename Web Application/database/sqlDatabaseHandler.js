@@ -66,6 +66,16 @@ function getUser(username)
         }
     });
 }
+function checkUserAndPassword(username, password)
+{
+    return Users.findAll({
+        attributes: ["username", "password"],
+        where:  {
+            username,
+            password 
+        }
+    });
+}
 
 function addUser(username, password, mobile)
 {
@@ -167,4 +177,4 @@ function deleteContact(username, phone)
     });
 }
 
-module.exports = {  database, Users, Contacts, addUser, addContact, getContacts, patchContacts, getUser, deleteContact};
+module.exports = {  database, Users, Contacts, addUser, addContact, getContacts, patchContacts, getUser, checkUserAndPassword, deleteContact};

@@ -69,9 +69,9 @@ server.post("/signup", function(req, res)
     });
 });
 
-server.get("/getUser", function(req, res, next)
+server.post("/checkUser", function(req, res, next)
 {
-    sqlDatabaseHandler.getUser(req.query.username)
+    sqlDatabaseHandler.checkUserAndPassword(req.body.username, req.body.password)
     .then(function(user)
     {
         res.send(user);
