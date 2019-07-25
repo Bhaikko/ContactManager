@@ -5,17 +5,6 @@ const sqlDatabaseHandler = require("./../database/sqlDatabaseHandler");
 
 const route = express.Router();
 
-// contacts = [
-//     {
-//         name: "Siddharth Bhaikko Pawar",
-//         phone: "999999999",
-//         address: "house locallity city state pin",
-//         email: "yo@gmail.com",
-//         profile: "./../uploads/profile.png"
-//     }
-// ];
-
-
 route.get("/", function(req, res, next)
 {
     let name = req.user.username;
@@ -28,7 +17,6 @@ route.get("/", function(req, res, next)
         });
         res.render("myhomepage", {name, contacts});
     });
-
 });
 
 route.get("/contacts", function(req, res, next)

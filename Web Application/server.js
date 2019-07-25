@@ -6,9 +6,11 @@ const fs = require("fs");
 //Handlers
 const sqlDatabaseHandler = require("./database/sqlDatabaseHandler");
 const passport = require("./passport");
+const adminPassport = require("./adminpassport");
 
 //Routers
 const contactsRouter = require("./routes/contacts");
+const adminRouter = require("./routes/admin");
 
 const server = express();
 
@@ -16,8 +18,8 @@ server.set("view engine", "hbs");
 server.use(express.json());
 server.use(express.urlencoded({extended: true}));
 
-
 server.use(express.static("./public"));
+server.use("/admin", express.static("./private"));
 
 server.use(session({
     secret: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF FFFFFF",
@@ -36,6 +38,11 @@ server.post("/login", passport.authenticate("local", {
     failureRedirect: "/login.html"
 }));
 
+server.post("/adminLogin", adminPassport.authenticate("local", {
+    successRedirect: "/admin/issues",
+    failureRedirect: "/"
+}));
+
 function checkLoggedIn(req, res, next)
 {
     if(!req.user)
@@ -47,7 +54,21 @@ function checkLoggedIn(req, res, next)
     next();    
 }
 
+//DOUBT
+// function checkAdminLoggedIn(req, res, next)
+// {
+//     console.log(req.admin);
+//     if(!req.admin)
+//     {
+//         res.redirect("/admin");
+//         return;
+//     }
+
+//     next();
+// }    
+
 server.use("/profile", checkLoggedIn, contactsRouter);
+server.use("/admin", adminRouter); 
 
 server.post("/signup", function(req, res)
 {

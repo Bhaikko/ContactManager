@@ -57,6 +57,28 @@ const Contacts = database.define("contacts", {
     }
 });
 
+const Admins = database.define("admins", {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: true 
+    },
+    username:   {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    password: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
+})
+
+// Admins.create({
+//     username: "nimda",
+//     password: "nimda"
+// })           //To Add Admin
+
 function getUser(username)
 {
     return Users.findAll({
@@ -177,4 +199,16 @@ function deleteContact(username, phone)
     });
 }
 
-module.exports = {  database, Users, Contacts, addUser, addContact, getContacts, patchContacts, getUser, checkUserAndPassword, deleteContact};
+module.exports = {  
+    database, 
+    Users, 
+    Contacts,
+    Admins, 
+    addUser, 
+    addContact, 
+    getContacts, 
+    patchContacts, 
+    getUser, 
+    checkUserAndPassword, 
+    deleteContact
+};
