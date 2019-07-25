@@ -12,6 +12,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>
@@ -55,12 +57,10 @@
                         <div class="contacts">
                             <div class="list-group">
                                 {{#each contacts as |contact|}}
-                                    <div>
-                                        <button type="button" class="list-group-item list-group-item-action">
+                                        <button type="button" class="list-group-item list-group-item-action selectableContact">
                                         <img src={{contact.profile}}>
                                         {{contact.name}}
                                         </button>
-                                    </div>
                                 {{/each}}
                             </div>
                         </div>
@@ -73,13 +73,13 @@
 
             <div class="col-md-12 col-lg-6 ">
                 <div class="contactBox">
-                    <div class="inboxBox text-light bg-dark">
+                    <div class="inboxBox text-light bg-dark" hidden>
                         <h1>Inbox</h1>
                         <div class="divider bg-light"></div>
                         <div class="inbox">
                             <div class="header mt-3">
-                                <img src="../images/profile.png">
-                                <div class="senderName">Contact 1</div>   
+                                <img src="../images/profile.png" id="senderImage">
+                                <div id="senderName"></div>   
                             </div>
 
                             <div class="messagesBox bg-light text-dark mt-2 mb-4">
@@ -98,8 +98,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script src="../hbs/myhomepage.js"></script>
 </body>
 </html>

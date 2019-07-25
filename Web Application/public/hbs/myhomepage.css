@@ -42,11 +42,17 @@ img
     box-shadow: 2px 2px grey;
 }
 
-.senderName
+#senderName
 {
     display: inline-block;
     font-size: 20px;
 
+}
+
+#senderImage
+{
+    width: 50px;
+    height: 50px;
 }
 
 .messagesBox 
@@ -96,4 +102,3 @@ img
     display: inline-block;
     vertical-align: middle;
 }
-
