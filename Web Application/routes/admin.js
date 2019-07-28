@@ -40,12 +40,12 @@ route.delete("/issues", function(req, res)
     .then(function(database)
     {
         const issues = database.collection("issues");
-        issues.deleteOne({
-            name: req.body.name,
+        issues.deleteMany({
+            name: req.body.name, 
             email: req.body.email,
-            message: req.body.message
         });
     });
+    res.sendStatus(200);
 })
 
 module.exports = route;            

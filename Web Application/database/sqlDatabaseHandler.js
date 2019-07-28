@@ -144,6 +144,8 @@ function deleteContact(userId, phone)
     });
 }
 
+// addAdmin("nimda", "nimda", "99999");
+
 module.exports = {
     addUser, 
     addContact, 

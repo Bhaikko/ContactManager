@@ -56,16 +56,16 @@ function checkLoggedIn(req, res, next)
 
 function checkAdminLogin(req, res, next)
 {
-    if(!req.user.admin)
+    if(!req.user.bAdmin)
     {
-        res.redirect("/profile");
+        res.redirect("/admin");
         return;
     }
     next();
 }
 
 server.use("/profile", checkLoggedIn, contactsRouter);
-server.use("/admin", checkLoggedIn,checkAdminLogin, adminRouter); 
+server.use("/admin", checkLoggedIn, checkAdminLogin, adminRouter); 
 
 server.post("/signup", function(req, res)
 {

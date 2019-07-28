@@ -13,7 +13,6 @@ deleteButtons.each(function(index)
             data: {
                 name: deleteRowValues[0].innerText,
                 email: deleteRowValues[1].innerText,
-                message: deleteRowValues[2].innerText
             }                        
         });
         deleteRow.remove();
