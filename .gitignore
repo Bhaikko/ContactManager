@@ -7,7 +7,10 @@ Design\ Document
 
 # Database directory
 Web\ Application/database/*
+!Web\ Application/database/sqlDatabase.js
 !Web\ Application/database/sqlDatabaseHandler.js
+!Web\ Application/database/mongoDatabase.js
+!Web\ Application/database/mongoDatabaseHandler.js
 
 
 

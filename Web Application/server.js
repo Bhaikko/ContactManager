@@ -4,12 +4,12 @@ const session = require("express-session");
 const fs = require("fs");
 
 //Handlers
+const { database} = require("./database/sqlDatabase");
 const sqlDatabaseHandler = require("./database/sqlDatabaseHandler");
 const passport = require("./passport");
-const adminPassport = require("./adminpassport");
 
 //Routers
-const contactsRouter = require("./routes/contacts");
+const contactsRouter = require("./routes/profile");
 const adminRouter = require("./routes/admin");
 
 const server = express();
@@ -38,7 +38,7 @@ server.post("/login", passport.authenticate("local", {
     failureRedirect: "/login.html"
 }));
 
-server.post("/adminLogin", adminPassport.authenticate("local", {
+server.post("/adminLogin", passport.authenticate("local", {
     successRedirect: "/admin/issues",
     failureRedirect: "/"
 }));
@@ -52,41 +52,30 @@ function checkLoggedIn(req, res, next)
     }
         
     next();    
+}  
+
+function checkAdminLogin(req, res, next)
+{
+    if(!req.user.admin)
+    {
+        res.redirect("/profile");
+        return;
+    }
+    next();
 }
 
-//DOUBT
-// function checkAdminLoggedIn(req, res, next)
-// {
-//     console.log(req.admin);
-//     if(!req.admin)
-//     {
-//         res.redirect("/admin");
-//         return;
-//     }
-
-//     next();
-// }    
-
 server.use("/profile", checkLoggedIn, contactsRouter);
-server.use("/admin", adminRouter); 
+server.use("/admin", checkLoggedIn,checkAdminLogin, adminRouter); 
 
 server.post("/signup", function(req, res)
 {
     sqlDatabaseHandler.addUser(req.body.username, req.body.password, req.body.mobile)
     .then(function(response)
     {
-        if(response == "User Already Exist")
+        fs.mkdir("./public/uploads/" + req.body.username, function(err, dir)
         {
-            console.log("User Already Exist");
-        }
-        else 
-        {
-            fs.mkdir("./public/uploads/" + req.body.username, function(err, dir)
-            {
-                console.log("New User: " + req.body.username + " Added");
-            });
-        }
-        res.redirect("/login.html");
+            res.redirect("/login.html");
+        });
     });
 });
 
@@ -105,7 +94,7 @@ server.get("/logout", function(req, res)
     res.redirect("/");
 })
 
-sqlDatabaseHandler.database.sync()
+database.sync()
 .then(function()
 {
     console.log("SQL Database Synced");

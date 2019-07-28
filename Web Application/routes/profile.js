@@ -1,14 +1,14 @@
 const express = require("express");
 
-const uploadHandler = require("./../uploads/uploadHandler");
-const sqlDatabaseHandler = require("./../database/sqlDatabaseHandler");
+const uploadHandler = require("../uploads/uploadHandler");
+const sqlDatabaseHandler = require("../database/sqlDatabaseHandler");
 
 const route = express.Router();
 
 route.get("/", function(req, res, next)
 {
     let name = req.user.username;
-    sqlDatabaseHandler.getContacts(req.user.username, true)
+    sqlDatabaseHandler.getContacts(req.user.id, true)
     .then(function(contacts)
     {
         contacts.map(function(contact)
@@ -23,7 +23,7 @@ route.get("/contacts", function(req, res, next)
 {
     let username = req.user.username;
     let renderingContacts = [];
-    sqlDatabaseHandler.getContacts(req.user.username, false)
+    sqlDatabaseHandler.getContacts(req.user.id, false)
     .then(function(contacts)
     {   
         renderingContacts = contacts;
@@ -55,7 +55,7 @@ route.post("/addContact", uploadHandler.upload.single("profile"), function(req, 
         else
             newContact["profile"] = "./../uploads/profile.png";
     
-        sqlDatabaseHandler.addContact(req.user.username, newContact.name, newContact.phone, newContact.address, newContact.email, newContact.profile);
+        sqlDatabaseHandler.addContact(req.user.id, newContact.name, newContact.phone, newContact.address, newContact.email, newContact.profile);
         res.redirect("/profile/contacts");
         return;
         
@@ -64,12 +64,24 @@ route.post("/addContact", uploadHandler.upload.single("profile"), function(req, 
 
 route.patch("/patchContact", function(req, res)
 {
-    sqlDatabaseHandler.patchContacts(req.user.username ,req.body.name, req.body.phone, req.body.address, req.body.email);
+    sqlDatabaseHandler.patchContacts(req.user.id ,req.body.name, req.body.phone, req.body.address, req.body.email);
 });
 
 route.delete("/deleteContact", function(req, res)
 {
-    sqlDatabaseHandler.deleteContact(req.user.username, req.body.phone);
+    sqlDatabaseHandler.deleteContact(req.user.id, req.body.phone);
+    require("fs").access(__dirname + "/../public/uploads/" + req.user.username + "/" + req.body.phone, function(err)
+    {
+        if(!err)
+        {
+            require("fs").unlink(__dirname + "/../public/uploads/" + req.user.username + "/" + req.body.phone, function(err)
+            {
+                if(err)
+                    console.log(err);
+            });
+        }
+    });
+    
 });
 
 module.exports = route;

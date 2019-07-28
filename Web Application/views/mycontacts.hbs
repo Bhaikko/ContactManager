@@ -48,9 +48,9 @@
 
 
     <div class="container mt-4">
-        <div class="row">
+        {{!-- <div class="row"> --}}
             {{#each renderingContacts as |contact|}}
-                <div class="col">
+                {{!-- <div class="col"> --}}
                     <div class="contact bg-dark text-light p-3">
                             <div class="front">
                                 <div class="frontImage"><img src={{contact.profile}}></div>
@@ -89,9 +89,9 @@
                                 </table>
                             </div>
                     </div>
-                </div>
+                {{!-- </div> --}}
             {{/each}}
-        </div>
+        {{!-- </div> --}}
     </div>
 
     <script src="../hbs/mycontacts.js"></script>

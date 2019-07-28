@@ -1,7 +1,6 @@
 let editButtons = $(".editButton");
 let deleteButtons = $(".deleteButton");
 
-// console.log(editButtons);
 editButtons.each(function(index)
 {
     editButtons[index].addEventListener("click", function(event)

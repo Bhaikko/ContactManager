@@ -1,83 +1,5 @@
-// In The End I Guess
-// Will be using mySql Though with sequelize and mysql
+const { Users, Contacts} = require("./sqlDatabase");
 
-const Sequelize = require("sequelize");
-
-const database = new Sequelize("contactmanager", "contactManagerAdmin", "123456",{
-    host: "localhost",
-    dialect: "mysql",
-    logging: false 
-});
-
-const Users = database.define("users", {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
-    },
-    username: {
-        type: Sequelize.STRING,
-        allowNull: false, 
-    },
-    password: {
-        type: Sequelize.STRING,
-        allowNull: false 
-    },
-    mobile: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    }
-
-});
-
-const Contacts = database.define("contacts", {
-    username: {
-        type: Sequelize.STRING,
-        allowNull: false 
-    },
-    name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    phone: {
-        type: Sequelize.STRING,
-        primaryKey: true,
-        allowNull: false,
-    },
-    address: {
-        type: Sequelize.STRING
-    },
-    email: {
-        type: Sequelize.STRING 
-    },
-    profile:{
-        type: Sequelize.STRING,
-        allowNull: false 
-    }
-});
-
-const Admins = database.define("admins", {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: true 
-    },
-    username:   {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    password: {
-        type: Sequelize.STRING,
-        allowNull: false
-    }
-})
-
-// Admins.create({
-//     username: "nimda",
-//     password: "nimda"
-// })           //To Add Admin
 
 function getUser(username)
 {
@@ -116,15 +38,43 @@ function addUser(username, password, mobile)
                 mobile
             });
         }
-        else 
-        {
-            return "User Already Exist";
-        }
     })
     .catch(console.log);
 }
 
-function addContact(username, name, phone, address, email, profile)
+function addAdmin(username, password, mobile)
+{
+    return Users.findOne({
+        where: {
+            username 
+        }
+    })
+    .then(function(admin)
+    {
+        if(!admin)
+        {
+            return Users.create({
+                username,
+                password,
+                mobile,
+                bAdmin: true 
+            })
+        }
+        else 
+        {
+            return Contacts.update({
+                bAdmin: true 
+            },
+            {
+                where:  {
+                    username
+                }
+            });
+        }
+    })
+}
+
+function addContact(userId, name, phone, address, email, profile)
 {
     return Contacts.findOne({
         where: {
@@ -136,7 +86,7 @@ function addContact(username, name, phone, address, email, profile)
         if(!contact)
         {
             return Contacts.create({
-                username,
+                userId,
                 name,
                 phone,
                 address,
@@ -144,66 +94,57 @@ function addContact(username, name, phone, address, email, profile)
                 profile 
             });
         }
-        else 
-        {
-            return "Contact Already Exist";
-        }
     })
     .catch(console.log);
 }
 
-function getContacts(username, bFrontPage)
+function getContacts(userId, bFrontPage)
 {
     if(bFrontPage)
     {
         return Contacts.findAll({
             attributes: ["name", "profile"],
             where: {
-                username
+                userId
             }
-
-        })
+        });
     }
     else (!bFrontPage)
     {
         return Contacts.findAll({
             where: {
-                username
+                userId
             }
         });
     }
 }
 
-function patchContacts(username ,name, phone, address, email)
+function patchContacts(userId ,name, phone, address, email)
 {
     return Contacts.update({
-        username,
         name,
         address,
         email
     },
     {
         where:  {
+            userId,
             phone
         }
     });
 }
 
-function deleteContact(username, phone)
+function deleteContact(userId, phone)
 {
     return Contacts.destroy({
         where:  {
-            username,
+            userId,
             phone
         }
     });
 }
 
-module.exports = {  
-    database, 
-    Users, 
-    Contacts,
-    Admins, 
+module.exports = {
     addUser, 
     addContact, 
     getContacts, 
@@ -211,4 +152,4 @@ module.exports = {
     getUser, 
     checkUserAndPassword, 
     deleteContact
-};
+}

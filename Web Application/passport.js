@@ -1,6 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const Users = require("./database/sqlDatabaseHandler").Users;
+const Users = require("./database/sqlDatabase").Users;
 
 passport.use(
     new LocalStrategy(function (username, password, done)
@@ -13,12 +13,14 @@ passport.use(
         .then(function(user)
         {
             if(!user)
-                return done(null, false, {message: "No Username Exists"});
+                return done(null, false);
 
             if(user.password != password)
-                return done(null, false, {message: "Wrong Password"});
+                return done(null, false);
+
 
             done(null, user);
+
         })
         .catch(done);
     })

@@ -41,7 +41,7 @@ loginButton.click(function(event)
                 return;
             }
                 
-        });        
+        });       
     }
 });
 
@@ -80,16 +80,22 @@ signupButton.click(function(event)
     }    
     else 
     {
-        jQuery.get("/getUser?username=" + username, function(user)
+        // console.log("Inside");
+        jQuery.post("/checkUser", { username, password}, function(user)
         {
+            console.log(user);
             if(user.length == 1)
             {
                 $("#signupUsernameExist").removeAttr("hidden");
                 return;
             }
             else 
+            {
                 signupForm.submit();
+            }
+                
         });
+        
         
     }
 
