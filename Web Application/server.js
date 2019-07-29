@@ -1,6 +1,9 @@
 //npm packages
 const express = require("express");
 const session = require("express-session");
+const socket = require("socket.io");
+
+const http = require("http");
 const fs = require("fs");
 
 //Handlers
@@ -12,16 +15,18 @@ const passport = require("./passport");
 const contactsRouter = require("./routes/profile");
 const adminRouter = require("./routes/admin");
 
-const server = express();
+const app = express();
+const server = http.createServer(app);
+const io = socket(server);
 
-server.set("view engine", "hbs");
-server.use(express.json());
-server.use(express.urlencoded({extended: true}));
+app.set("view engine", "hbs");
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
-server.use(express.static("./public"));
-server.use("/admin", express.static("./private"));
+app.use(express.static("./public"));
+app.use("/admin", express.static("./private"));
 
-server.use(session({
+app.use(session({
     secret: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF FFFFFF",
     resave: false,
     saveUninitialized: true,
@@ -30,15 +35,15 @@ server.use(session({
     }
 }));
 
-server.use(passport.initialize());
-server.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
-server.post("/login", passport.authenticate("local", {
+app.post("/login", passport.authenticate("local", {
     successRedirect: "/profile",
     failureRedirect: "/login.html"
 }));
 
-server.post("/adminLogin", passport.authenticate("local", {
+app.post("/adminLogin", passport.authenticate("local", {
     successRedirect: "/admin/issues",
     failureRedirect: "/"
 }));
@@ -64,10 +69,10 @@ function checkAdminLogin(req, res, next)
     next();
 }
 
-server.use("/profile", checkLoggedIn, contactsRouter);
-server.use("/admin", checkLoggedIn, checkAdminLogin, adminRouter); 
+app.use("/profile", checkLoggedIn, contactsRouter);
+app.use("/admin", checkLoggedIn, checkAdminLogin, adminRouter); 
 
-server.post("/signup", function(req, res)
+app.post("/signup", function(req, res)
 {
     sqlDatabaseHandler.addUser(req.body.username, req.body.password, req.body.mobile)
     .then(function(response)
@@ -79,20 +84,44 @@ server.post("/signup", function(req, res)
     });
 });
 
-server.post("/checkUser", function(req, res, next)
+app.post("/checkUser", function(req, res, next)
 {
     sqlDatabaseHandler.checkUserAndPassword(req.body.username, req.body.password)
     .then(function(user)
     {
         res.send(user);
     });
-})
+});
 
-server.get("/logout", function(req, res)
+app.get("/logout", function(req, res)
 {
     req.logOut();
     res.redirect("/");
+});
+
+app.get("/time", function(req, res)
+{
+    let today = new Date();
+    let currentTime = today.getHours() + ":" + today.getMinutes();
+    res.send(currentTime);
 })
+
+io.on("connection", function(socket)
+{
+    let today = new Date();
+    let session = socket.request.session;
+
+    console.log(session);
+    socket.on("send", function(data)
+    {
+        socket.broadcast.emit("recieve", {
+            message: data.message,
+            time: today.getHours() + ":" + today.getMinutes()
+        });
+    });
+    
+});
+
 
 database.sync()
 .then(function()
@@ -101,4 +130,6 @@ database.sync()
     let port = 4000;
     server.listen(port, () => console.log("Server Up And Running On 127.0.0.1:" + port));
 });
+
+
 

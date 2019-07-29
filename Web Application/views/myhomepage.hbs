@@ -93,8 +93,8 @@
                             </div>
 
                             <div class="sendBox mt-3">
-                                <textarea type="text" class="form-control" id="inputMessage" placeholder="Type Message" ></textarea>
-                                <button type="button" class="btn btn-primary" style="display: inline-block;">Send Message</button> 
+                                <textarea name="inputMessage" type="text" class="form-control" id="inputMessage" placeholder="Type Message"></textarea>
+                                <button id="sendButton" type="button" class="btn btn-primary" style="display: inline-block;">Send Message</button> 
                             </div>
                         </div>
                     </div>
@@ -103,6 +103,7 @@
         </div>
     </div>
 
+    <script src="socket.io/socket.io.js"></script>
     <script src="../hbs/myhomepage.js"></script>
 </body>
 </html>

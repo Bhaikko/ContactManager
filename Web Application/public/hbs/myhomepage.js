@@ -1,6 +1,11 @@
 let selectableContacts = $(".selectableContact");
 let senderName = $("#senderName");
 let senderImage = $("#senderImage");
+let socket = io();
+
+let messagesBox = $(".messagesBox");
+let inputMessage = $("#inputMessage");
+let sendButton = $("#sendButton");
 
 selectableContacts.each(function(index)
 {
@@ -24,3 +29,20 @@ function disableOtherContacts()
         selectableContacts[index].classList.remove("active");
     });
 }
+
+sendButton.click(function(event)
+{
+    socket.emit("send", {
+        message: inputMessage.val()
+    });
+    jQuery.get("/time", function(time)
+    {
+        messagesBox.append(`<div class="message myMessage bg-success text-light">${inputMessage.val()} <span class="time text-danger">${time}</span></div><br><br>`)
+        inputMessage.val("");
+    })
+    
+})
+socket.on("recieve", function(data)
+{
+    messagesBox.append(`<div class="message notMyMessage bg-secondary text-light">${data.message} <span class="time text-danger">${data.time}</span></div><br><br>`)
+});

@@ -52,8 +52,19 @@ const Contacts = database.define("contacts", {
 Contacts.belongsTo(Users);
 Users.hasMany(Contacts);
 
+const ActiveUsers = database.define("activeUsers", {
+    socketId: {
+        type: Sequelize.STRING,
+        allowNull: false 
+    }
+});
+
+ActiveUsers.belongsTo(Users);
+Users.hasMany(ActiveUsers);
+
 module.exports = {  
     database, 
     Users, 
-    Contacts
+    Contacts,
+    ActiveUsers
 };

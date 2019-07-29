@@ -1,4 +1,4 @@
-const { Users, Contacts} = require("./sqlDatabase");
+const { Users, Contacts, ActiveUsers} = require("./sqlDatabase");
 
 
 function getUser(username)
@@ -146,6 +146,24 @@ function deleteContact(userId, phone)
 
 // addAdmin("nimda", "nimda", "99999");
 
+function makeActive(userId, socketId)
+{
+    return ActiveUsers.findOrCreate({
+        userId,
+        socketId
+    });
+}
+
+function removeActive(socketId)
+{
+    return ActiveUsers.destroy({
+        where:  {
+            socketId
+        }
+    });
+}
+
+
 module.exports = {
     addUser, 
     addContact, 
@@ -153,5 +171,7 @@ module.exports = {
     patchContacts, 
     getUser, 
     checkUserAndPassword, 
-    deleteContact
+    deleteContact,
+    makeActive,
+    removeActive
 }
