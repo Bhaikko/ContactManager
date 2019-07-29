@@ -2,6 +2,7 @@
 const express = require("express");
 const session = require("express-session");
 const socket = require("socket.io");
+const MongoStore = require("connect-mongo")(session);
 
 const http = require("http");
 const fs = require("fs");
@@ -17,7 +18,7 @@ const adminRouter = require("./routes/admin");
 
 const app = express();
 const server = http.createServer(app);
-const io = socket(server);
+
 
 app.set("view engine", "hbs");
 app.use(express.json());
@@ -26,14 +27,19 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static("./public"));
 app.use("/admin", express.static("./private"));
 
-app.use(session({
+let sessionMiddleware = session({
     secret: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF FFFFFF",
     resave: false,
     saveUninitialized: true,
+    store: new MongoStore({
+        url: "mongodb://127.0.0.1:5000/sessions"
+    }),
     cookie: {
         maxAge: 1000 * 60 * 60
     }
-}));
+});
+
+app.use(sessionMiddleware);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -106,21 +112,30 @@ app.get("/time", function(req, res)
     res.send(currentTime);
 })
 
-io.on("connection", function(socket)
-{
-    let today = new Date();
-    let session = socket.request.session;
-
-    console.log(session);
-    socket.on("send", function(data)
+const io = socket(server)
+    .use(function(socket, next)
     {
-        socket.broadcast.emit("recieve", {
-            message: data.message,
-            time: today.getHours() + ":" + today.getMinutes()
+        sessionMiddleware(socket.request, {}, next);
+    })
+    .on("connection", function(socket)
+    {
+        let today = new Date();
+        let userId = socket.request.session.passport.user;
+        sqlDatabaseHandler.makeActive(userId, socket.id);
+
+        socket.on("send", function(data)
+        {
+            socket.broadcast.emit("recieve", {
+                message: data.message,
+                time: today.getHours() + ":" + today.getMinutes()
+            });
+        });
+        
+        socket.on("disconnect", function()
+        {
+            sqlDatabaseHandler.removeActive(socket.id);
         });
     });
-    
-});
 
 
 database.sync()

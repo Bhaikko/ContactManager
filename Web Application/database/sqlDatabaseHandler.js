@@ -148,10 +148,23 @@ function deleteContact(userId, phone)
 
 function makeActive(userId, socketId)
 {
-    return ActiveUsers.findOrCreate({
-        userId,
-        socketId
-    });
+    return ActiveUsers.findOne({
+        where: {
+            userId,
+            socketId 
+        }
+    })
+    .then(function(user)
+    {
+        if(!user)
+        {
+            return ActiveUsers.create({
+                userId,
+                socketId 
+            });
+        }
+    })
+    .catch(console.log);
 }
 
 function removeActive(socketId)
