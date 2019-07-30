@@ -7,6 +7,8 @@ let messagesBox = $(".messagesBox");
 let inputMessage = $("#inputMessage");
 let sendButton = $("#sendButton");
 
+let currentContact = null;
+
 selectableContacts.each(function(index)
 {
     selectableContacts[index].addEventListener("click",(function(event)
@@ -16,7 +18,8 @@ selectableContacts.each(function(index)
         selectableContacts[index].classList.add("active");
         senderName[0].innerText = selectableContacts[index].innerText;
         senderImage[0].setAttribute("src", selectableContacts[index].children[0].getAttribute("src"));
-
+        currentContact = event.target.children[1].innerText;
+        messagesBox.empty();
         //Make get request to database for messages
     }));
     
@@ -32,7 +35,9 @@ function disableOtherContacts()
 
 sendButton.click(function(event)
 {
+    console.log(currentContact);
     socket.emit("send", {
+        mobile: currentContact,
         message: inputMessage.val()
     });
     jQuery.get("/time", function(time)

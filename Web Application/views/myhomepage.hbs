@@ -60,6 +60,7 @@
                                         <button type="button" class="list-group-item list-group-item-action selectableContact">
                                         <img src={{contact.profile}}>
                                         {{contact.name}}
+                                        <div class="contactNumber" hidden>{{contact.phone}}</div>
                                         </button>
                                 {{/each}}
                             </div>
@@ -83,13 +84,13 @@
                             </div>
 
                             <div class="messagesBox bg-light text-dark mt-2 mb-4">
-                                <div class="message notMyMessage bg-secondary text-light">Hi <span class="time text-danger">12:00</span></div><br><br>    
+                                {{!-- <div class="message notMyMessage bg-secondary text-light">Hi <span class="time text-danger">12:00</span></div><br><br>    
                                 <div class="message myMessage bg-success text-light">Hello <span class="time text-danger">12:00</span></div><br><br>
                                 <div class="message notMyMessage bg-secondary text-light">How's It going <span class="time text-danger">12:01</span></div><br><br>
                                 <div class="message myMessage bg-success text-light">Yes <span class="time text-danger">12:01</span></div><br><br>
                                 <div class="message myMessage bg-success text-light">Fuck <span class="time text-danger">12:02</span></div><br><br>
                                 <div class="message notMyMessage bg-secondary text-light">Nice <span class="time text-danger">12:02</span></div><br><br>
-                                <div class="message myMessage bg-success text-light">Nice <span class="time text-danger">12:02</span></div><br><br>
+                                <div class="message myMessage bg-success text-light">Nice <span class="time text-danger">12:02</span></div><br><br> --}}
                             </div>
 
                             <div class="sendBox mt-3">

@@ -34,9 +34,9 @@ let sessionMiddleware = session({
     store: new MongoStore({
         url: "mongodb://127.0.0.1:5000/sessions"
     }),
-    cookie: {
-        maxAge: 1000 * 60 * 60
-    }
+    // cookie: {
+    //     maxAge: 1000 * 60 * 60
+    // }
 });
 
 app.use(sessionMiddleware);
@@ -90,7 +90,7 @@ app.post("/signup", function(req, res)
     });
 });
 
-app.post("/checkUser", function(req, res, next)
+app.post("/checkUserLogin", function(req, res, next)
 {
     sqlDatabaseHandler.checkUserAndPassword(req.body.username, req.body.password)
     .then(function(user)
@@ -98,6 +98,24 @@ app.post("/checkUser", function(req, res, next)
         res.send(user);
     });
 });
+
+app.post("/checkUsername", function(req, res, next)
+{
+    sqlDatabaseHandler.checkUsername(req.body.username)
+    .then(function(user)
+    {
+        res.send(user);
+    });
+});
+
+app.post("/checkMobile", function(req, res)
+{
+    sqlDatabaseHandler.checkMobile(req.body.mobile)
+    .then(function(user)
+    {
+        res.send(user);
+    })
+})
 
 app.get("/logout", function(req, res)
 {
@@ -125,9 +143,24 @@ const io = socket(server)
 
         socket.on("send", function(data)
         {
-            socket.broadcast.emit("recieve", {
-                message: data.message,
-                time: today.getHours() + ":" + today.getMinutes()
+            
+            sqlDatabaseHandler.getUserId(data.mobile)
+            .then(function(user)
+            {
+                if(user)
+                {
+                    // console.log(user.get());
+                    sqlDatabaseHandler.getSocketId(user.get().id)
+                    .then(function(socketData)
+                    {
+                        socket.to(socketData.socketId).emit("recieve", {
+                            mobile: data.mobile,
+                            message: data.message,
+                            time: today.getHours() + ":" + today.getMinutes()
+                        });
+                    });
+                }
+                
             });
         });
         

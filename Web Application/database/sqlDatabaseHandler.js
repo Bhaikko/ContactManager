@@ -10,6 +10,27 @@ function getUser(username)
         }
     });
 }
+
+function getUserId(mobile)
+{
+    return Users.findOne({
+        attributes: ["id"],
+        where: {
+            mobile
+        }
+    });
+}
+
+function getSocketId(userId)
+{
+    return ActiveUsers.findOne({
+        attributes: ["socketId"],
+        where: {
+            userId
+        }
+    });
+}
+
 function checkUserAndPassword(username, password)
 {
     return Users.findAll({
@@ -17,6 +38,26 @@ function checkUserAndPassword(username, password)
         where:  {
             username,
             password 
+        }
+    });
+}
+
+function checkUsername(username)
+{
+    return Users.findAll({
+        attributes: ["username"],
+        where:  {
+            username
+        }
+    });
+}
+
+function checkMobile(mobile)
+{
+    return Users.findAll({
+        attributes: ["mobile"],
+        where:  {
+            mobile
         }
     });
 }
@@ -103,7 +144,7 @@ function getContacts(userId, bFrontPage)
     if(bFrontPage)
     {
         return Contacts.findAll({
-            attributes: ["name", "profile"],
+            attributes: ["name", "profile", "phone"],
             where: {
                 userId
             }
@@ -144,14 +185,13 @@ function deleteContact(userId, phone)
     });
 }
 
-// addAdmin("nimda", "nimda", "99999");
+// addAdmin("nimda", "nimda", "99999"); To Add Admin, run this function
 
 function makeActive(userId, socketId)
 {
     return ActiveUsers.findOne({
         where: {
-            userId,
-            socketId 
+            userId
         }
     })
     .then(function(user)
@@ -183,7 +223,11 @@ module.exports = {
     getContacts, 
     patchContacts, 
     getUser, 
+    getUserId,
+    getSocketId,
     checkUserAndPassword, 
+    checkUsername,
+    checkMobile,
     deleteContact,
     makeActive,
     removeActive

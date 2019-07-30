@@ -26,7 +26,7 @@ loginButton.click(function(event)
     }
     else 
     {
-        jQuery.post("/checkUser",{
+        jQuery.post("/checkUserLogin",{
             username: loginUsername,
             password: loginPassword
         }, function(user)
@@ -80,10 +80,9 @@ signupButton.click(function(event)
     }    
     else 
     {
-        // console.log("Inside");
-        jQuery.post("/checkUser", { username, password}, function(user)
+        jQuery.post("/checkUsername", { username}, function(user)
         {
-            console.log(user);
+            // console.log(user);
             if(user.length == 1)
             {
                 $("#signupUsernameExist").removeAttr("hidden");
@@ -91,14 +90,21 @@ signupButton.click(function(event)
             }
             else 
             {
-                signupForm.submit();
+                jQuery.post("/checkMobile", { mobile}, function(user)
+                {
+                    if(user.length == 1)
+                    {
+                        $("#signupMobileExist").removeAttr("hidden");
+                        return;
+                    }
+                    else 
+                    {
+                        signupForm.submit();
+                    }
+                })
             }
-                
         });
-        
-        
     }
-
 });
 
 function hideAllSmallElement()

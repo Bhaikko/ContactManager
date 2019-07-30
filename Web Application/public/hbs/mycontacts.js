@@ -55,7 +55,7 @@ deleteButtons.each(function(index)
     {
         let parentContainer = event.target.parentNode.parentNode.parentNode.parentNode;
         let rows = parentContainer.children[1].children[0].children;
-        let containerToDelete = parentContainer.parentNode.parentNode;
+        let containerToDelete = parentContainer.parentNode;
 
         jQuery.ajax({
             type: "DELETE",

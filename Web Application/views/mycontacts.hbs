@@ -48,50 +48,46 @@
 
 
     <div class="container mt-4">
-        {{!-- <div class="row"> --}}
-            {{#each renderingContacts as |contact|}}
-                {{!-- <div class="col"> --}}
-                    <div class="contact bg-dark text-light p-3">
-                            <div class="front">
-                                <div class="frontImage"><img src={{contact.profile}}></div>
-                                <div class="frontName"><u>{{contact.firstName}}</u></div>
+        {{#each renderingContacts as |contact|}}
+            <div class="contact bg-dark text-light p-3">
+                <div class="front">
+                    <div class="frontImage"><img src={{contact.profile}}></div>
+                    <div class="frontName"><u>{{contact.firstName}}</u></div>
+                </div>
+                <div class="back">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="backImage"><img src={{contact.profile}}></div>
                             </div>
-                            <div class="back">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="backImage"><img src={{contact.profile}}></div>
-                                        </div>
-                                        <div class="col" style="margin-left: 10px">
-                                            <button type="button" class="btn btn-warning editButton">Edit</button><br>
-                                            <button type="button" class="btn btn-danger deleteButton" style="margin-top: 20px;">Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <table class="table table-striped text-light">
-                                    <tr>
-                                        <th>Name: </th>
-                                        <td class="value" contenteditable="false">{{contact.name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Phone: </th>
-                                        <td class="value" contenteditable="false">{{contact.phone}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Address: </th>
-                                        <td class="value" contenteditable="false">{{contact.address}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Email: </th>
-                                        <td class="value" contenteditable="false">{{contact.email}}</td>
-                                    </tr>
-                                </table>
+                            <div class="col" style="margin-left: 10px">
+                                <button type="button" class="btn btn-warning editButton">Edit</button><br>
+                                <button type="button" class="btn btn-danger deleteButton" style="margin-top: 20px;">Delete</button>
                             </div>
+                        </div>
                     </div>
-                {{!-- </div> --}}
-            {{/each}}
-        {{!-- </div> --}}
+                    
+                    <table class="table table-striped text-light">
+                        <tr>
+                            <th>Name: </th>
+                            <td class="value" contenteditable="false">{{contact.name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone: </th>
+                            <td class="value" contenteditable="false">{{contact.phone}}</td>
+                        </tr>
+                        <tr>
+                            <th>Address: </th>
+                            <td class="value" contenteditable="false">{{contact.address}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email: </th>
+                            <td class="value" contenteditable="false">{{contact.email}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        {{/each}}
     </div>
 
     <script src="../hbs/mycontacts.js"></script>

@@ -62,6 +62,8 @@ const ActiveUsers = database.define("activeUsers", {
 ActiveUsers.belongsTo(Users);
 Users.hasMany(ActiveUsers);
 
+
+
 module.exports = {  
     database, 
     Users, 
