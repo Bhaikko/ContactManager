@@ -44,6 +44,35 @@ route.post("/checkOnline", function(req, res)
                 res.send("Offline");
         })
     })
+});
+
+route.post("/checkuser", function(req, res)
+{
+    sqlDatabaseHandler.getUserId(req.body.currentContact)
+    .then(function(user)
+    {
+        if(user == null)
+            res.send("false")
+        else 
+            res.send("true");
+    })
+})
+
+route.post("/checkFriend", function(req, res)
+{
+    sqlDatabaseHandler.getUserId(req.body.currentContact)
+    .then(function(user)
+    {
+        sqlDatabaseHandler.checkFriend(user.get().id, req.body.mobile)
+        .then(function(bFriend)
+        {
+            if(bFriend == null)
+            {
+                sqlDatabaseHandler.addContact(user.get().id, "Unknown", req.body.mobile, "", "", "./../uploads/profile.png");
+            }
+            res.sendStatus(200);
+        });
+    })
 })
 
 route.get("/contacts", function(req, res, next)

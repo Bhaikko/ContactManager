@@ -284,6 +284,17 @@ function checkOnline(userId)
     });
 }
 
+function checkFriend(userId, phone)
+{
+    return Contacts.findOne({
+        where:  {
+            id: userId,
+            phone
+        }
+        
+    });
+}
+
 module.exports = {
     addUser, 
     addContact, 
@@ -301,5 +312,6 @@ module.exports = {
     getMessages,
     addMessage,
     getContactId,
-    checkOnline
+    checkOnline,
+    checkFriend
 }

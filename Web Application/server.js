@@ -147,24 +147,26 @@ const io = socket(server)
             sqlDatabaseHandler.getUserId(data.mobile)   //The person to send message to Id
             .then(function(user)
             {
-                sqlDatabaseHandler.getContactId(userId, data.mobile)
-                .then(function(contact)
+                if(user)
                 {
-                    sqlDatabaseHandler.addMessage(userId, contact.id, data.message, time);
-                    if(user)
+                    sqlDatabaseHandler.getContactId(userId, data.mobile)
+                    .then(function(contact)
                     {
-                        sqlDatabaseHandler.getSocketId(user.get().id)
-                        .then(function(socketData)
+                        sqlDatabaseHandler.addMessage(userId, contact.id, data.message, time);
+                        if(user)
                         {
-                            socket.to(socketData.socketId).emit("recieve", {
-                                mobile: data.mobile,
-                                message: data.message,
-                                time: time
+                            sqlDatabaseHandler.getSocketId(user.get().id)
+                            .then(function(socketData)
+                            {
+                                socket.to(socketData.socketId).emit("recieve", {
+                                    mobile: data.mobile,
+                                    message: data.message,
+                                    time: time
+                                });
                             });
-                        });
-                    }
-                })
-                
+                        }
+                    })
+                }
             });
         });
         

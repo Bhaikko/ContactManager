@@ -63,7 +63,7 @@ Users.hasMany(ActiveUsers);
 
 const Messages = database.define("messages", {
     message: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false 
     },
     time: {

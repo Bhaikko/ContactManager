@@ -31,60 +31,78 @@ selectableContacts.each(function(index)
         selectableContacts[index].classList.add("active");        
         senderName[0].innerText = selectableContacts[index].innerText;
         senderImage[0].setAttribute("src", selectableContacts[index].children[0].getAttribute("src"));
-
+        $("#status")[0].setAttribute("hidden", "true");
+        $("#notExist")[0].setAttribute("hidden", "true");
         currentContact = event.target.children[1].innerText;
         messagesBox.empty();
 
-        jQuery.post("/profile/checkOnline", {   currentContact},function(status)
+        jQuery.post("/profile/checkUser", {currentContact}, function(existence)
         {
-            if(status == "Online")
-                $("#status")[0].removeAttribute("hidden");
-        });
+            if(existence == "true")
+            {
+                
+                jQuery.post("/profile/checkFriend",{    currentContact, mobile}, function()
+                {
+                    console.log("inside");
+                    jQuery.post("/profile/checkOnline", {   currentContact}, function(status)
+                    {
+                        if(status == "Online")
+                            $("#status")[0].removeAttribute("hidden");
+                    });
+                    
+                    async function getMessages()
+                    {
+                        //Request to get sent messages
+                        await jQuery.post("/profile/messages", {
+                            username,
+                            currentContact 
+                        },
+                        function(sentMessages)
+                        {
+                            userSendMessages = sentMessages;
+                        });
+
+                        //Request to get Recieved Messages
+                        await jQuery.post("/profile/messages", {
+                            username: selectableContacts[index].innerText.substr(1),
+                            currentContact: mobile 
+                        },
+                        function(recieveMessages)
+                        {
+                            userRecievedMessages = recieveMessages;
+                        });
+
+                        messages = userSendMessages.concat(userRecievedMessages);
+                        messages.sort(function(first, second)
+                        {
+                            if(first.id > second.id)
+                                return 1;
+                            if(first.id < second.id)
+                                return -1;
+                            return 0;
+                        });
+                        messages.forEach(function(message)
+                        {
+                            if (message.userId == userId)
+                            {
+                                messagesBox.append(`<div class="message myMessage bg-success text-light">${message.message} <span class="time text-danger">${message.time}</span></div><br><br>`)
+                            }
+                            else if(message.userId != userId) 
+                            {
+                                messagesBox.append(`<div class="message notMyMessage bg-secondary text-light">${message.message} <span class="time text-danger">${message.time}</span></div><br><br>`)
+                            }
+                        })
+                    }
+                    getMessages();
+                })     
+            }
+            else 
+            {
+                $("#notExist")[0].removeAttribute("hidden");
+            }
+            
+        })
         
-        async function getMessages()
-        {
-            //Request to get sent messages
-            await jQuery.post("/profile/messages", {
-                username,
-                currentContact 
-            },
-            function(sentMessages)
-            {
-                userSendMessages = sentMessages;
-            });
-
-            //Request to get Recieved Messages
-            await jQuery.post("/profile/messages", {
-                username: selectableContacts[index].innerText.substr(1),
-                currentContact: mobile 
-            },
-            function(recieveMessages)
-            {
-                userRecievedMessages = recieveMessages;
-            });
-
-            messages = userSendMessages.concat(userRecievedMessages);
-            messages.sort(function(first, second)
-            {
-                if(first.id > second.id)
-                    return 1;
-                if(first.id < second.id)
-                    return -1;
-                return 0;
-            });
-            messages.forEach(function(message)
-            {
-                if (message.userId == userId)
-                {
-                    messagesBox.append(`<div class="message myMessage bg-success text-light">${message.message} <span class="time text-danger">${message.time}</span></div><br><br>`)
-                }
-                else if(message.userId != userId) 
-                {
-                    messagesBox.append(`<div class="message notMyMessage bg-secondary text-light">${message.message} <span class="time text-danger">${message.time}</span></div><br><br>`)
-                }
-            })
-        }
-        getMessages();
     }));
     
 });
