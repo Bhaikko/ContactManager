@@ -141,7 +141,7 @@ const io = socket(server)
         let time = today.getHours() + ":" + today.getMinutes();
         let userId = socket.request.session.passport.user;  //current Active UserId
         sqlDatabaseHandler.makeActive(userId, socket.id);
-        // console.log(socket.id);
+
         socket.on("send", function(data)
         {
             sqlDatabaseHandler.getUserId(data.mobile)   //The person to send message to Id
@@ -150,7 +150,6 @@ const io = socket(server)
                 sqlDatabaseHandler.getContactId(userId, data.mobile)
                 .then(function(contact)
                 {
-                    // console.log(data.get());
                     sqlDatabaseHandler.addMessage(userId, contact.id, data.message, time);
                     if(user)
                     {

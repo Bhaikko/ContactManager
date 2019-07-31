@@ -29,6 +29,23 @@ route.post("/myid", function(req, res)
     });
 })
 
+route.post("/checkOnline", function(req, res)
+{
+    sqlDatabaseHandler.getUserId(req.body.currentContact)
+    .then(function(user)
+    {
+        // console.log(user);
+        sqlDatabaseHandler.checkOnline(user.get().id)
+        .then(function(status)
+        {
+            if(status)
+                res.send("Online");
+            else
+                res.send("Offline");
+        })
+    })
+})
+
 route.get("/contacts", function(req, res, next)
 {
     let username = req.user.username;

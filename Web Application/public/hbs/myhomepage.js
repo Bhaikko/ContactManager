@@ -34,8 +34,13 @@ selectableContacts.each(function(index)
 
         currentContact = event.target.children[1].innerText;
         messagesBox.empty();
-        //Make get request to database for messages
 
+        jQuery.post("/profile/checkOnline", {   currentContact},function(status)
+        {
+            if(status == "Online")
+                $("#status")[0].removeAttribute("hidden");
+        });
+        
         async function getMessages()
         {
             //Request to get sent messages

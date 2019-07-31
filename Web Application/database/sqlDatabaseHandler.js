@@ -119,6 +119,7 @@ function addContact(userId, name, phone, address, email, profile)
 {
     return Contacts.findOne({
         where: {
+            userId,
             phone 
         }
     })
@@ -196,13 +197,18 @@ function makeActive(userId, socketId)
     })
     .then(function(user)
     {
-        if(!user)
+        if(user)
         {
-            return ActiveUsers.create({
-                userId,
-                socketId 
-            });
+           ActiveUsers.destroy({
+               where:   {
+                   userId 
+               }
+           }) 
         }
+        return ActiveUsers.create({
+            userId,
+            socketId 
+        });
     })
     .catch(console.log);
 }
@@ -225,8 +231,6 @@ function addMessage(userId, contactId, message, time)
         time
     });
 }
-// addMessage(1, 1, "Hi ASDA", "12:00");
-// addMessage(2, 2, "Hi Asd", "12:05");
 
 function getMessages(username, phone)
 {
@@ -271,6 +275,15 @@ function getContactId(userId, phone)
     });
 }
 
+function checkOnline(userId)
+{
+    return ActiveUsers.findOne({
+        where: {
+           userId 
+        }
+    });
+}
+
 module.exports = {
     addUser, 
     addContact, 
@@ -287,5 +300,6 @@ module.exports = {
     removeActive,
     getMessages,
     addMessage,
-    getContactId
+    getContactId,
+    checkOnline
 }
