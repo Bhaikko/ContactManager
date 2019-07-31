@@ -261,6 +261,16 @@ function getMessages(username, phone)
     })
 }
 
+function getContactId(userId, phone)
+{
+    return Contacts.findOne({
+        where:  {
+            userId,
+            phone
+        }
+    });
+}
+
 module.exports = {
     addUser, 
     addContact, 
@@ -276,5 +286,6 @@ module.exports = {
     makeActive,
     removeActive,
     getMessages,
-    addMessage
+    addMessage,
+    getContactId
 }

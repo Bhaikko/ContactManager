@@ -138,26 +138,33 @@ const io = socket(server)
     .on("connection", function(socket)
     {
         let today = new Date();
+        let time = today.getHours() + ":" + today.getMinutes();
         let userId = socket.request.session.passport.user;  //current Active UserId
         sqlDatabaseHandler.makeActive(userId, socket.id);
-
+        // console.log(socket.id);
         socket.on("send", function(data)
         {
             sqlDatabaseHandler.getUserId(data.mobile)   //The person to send message to Id
             .then(function(user)
             {
-                if(user)
+                sqlDatabaseHandler.getContactId(userId, data.mobile)
+                .then(function(contact)
                 {
-                    sqlDatabaseHandler.getSocketId(user.get().id)
-                    .then(function(socketData)
+                    // console.log(data.get());
+                    sqlDatabaseHandler.addMessage(userId, contact.id, data.message, time);
+                    if(user)
                     {
-                        socket.to(socketData.socketId).emit("recieve", {
-                            mobile: data.mobile,
-                            message: data.message,
-                            time: today.getHours() + ":" + today.getMinutes()
+                        sqlDatabaseHandler.getSocketId(user.get().id)
+                        .then(function(socketData)
+                        {
+                            socket.to(socketData.socketId).emit("recieve", {
+                                mobile: data.mobile,
+                                message: data.message,
+                                time: time
+                            });
                         });
-                    });
-                }
+                    }
+                })
                 
             });
         });

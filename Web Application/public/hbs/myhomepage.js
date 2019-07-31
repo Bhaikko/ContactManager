@@ -59,24 +59,25 @@ selectableContacts.each(function(index)
             });
 
             messages = userSendMessages.concat(userRecievedMessages);
-            console.log(messages);
             messages.sort(function(first, second)
             {
+                if(first.id > second.id)
+                    return 1;
                 if(first.id < second.id)
-                    return true;
+                    return -1;
+                return 0;
             });
-            console.log(messages);
-            // messages.forEach(function(message)
-            // {
-            //     if (message.userId == userId)
-            //     {
-            //         messagesBox.append(`<div class="message myMessage bg-success text-light">${message.message} <span class="time text-danger">${message.time}</span></div><br><br>`)
-            //     }
-            //     else if(message.userId != userId) 
-            //     {
-            //         messagesBox.append(`<div class="message notMyMessage bg-secondary text-light">${message.message} <span class="time text-danger">${message.time}</span></div><br><br>`)
-            //     }
-            // })
+            messages.forEach(function(message)
+            {
+                if (message.userId == userId)
+                {
+                    messagesBox.append(`<div class="message myMessage bg-success text-light">${message.message} <span class="time text-danger">${message.time}</span></div><br><br>`)
+                }
+                else if(message.userId != userId) 
+                {
+                    messagesBox.append(`<div class="message notMyMessage bg-secondary text-light">${message.message} <span class="time text-danger">${message.time}</span></div><br><br>`)
+                }
+            })
         }
         getMessages();
     }));
