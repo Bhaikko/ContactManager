@@ -29,7 +29,8 @@
                     <a class="nav-link" href="./../newContact.html"><button type="button" class="btn btn-primary">New Contact</button></a>
                 </li>
                 <li class="nav-item" style="position: absolute; right: 45%;">
-                    <h1 class="d-md-none d-sm-none d-none d-lg-block text-light">Hi {{name}}</h1>
+                    <h1 class="d-md-none d-sm-none d-none d-lg-block text-light" id="username">Hi {{name}}</h1>
+                    <div id="mobile" hidden>{{mobile}}</div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/profile"><button type="button" class="btn btn-success">Inbox</button></a>
@@ -86,11 +87,7 @@
                             <div class="messagesBox bg-light text-dark mt-2 mb-4">
                                 {{!-- <div class="message notMyMessage bg-secondary text-light">Hi <span class="time text-danger">12:00</span></div><br><br>    
                                 <div class="message myMessage bg-success text-light">Hello <span class="time text-danger">12:00</span></div><br><br>
-                                <div class="message notMyMessage bg-secondary text-light">How's It going <span class="time text-danger">12:01</span></div><br><br>
-                                <div class="message myMessage bg-success text-light">Yes <span class="time text-danger">12:01</span></div><br><br>
-                                <div class="message myMessage bg-success text-light">Fuck <span class="time text-danger">12:02</span></div><br><br>
-                                <div class="message notMyMessage bg-secondary text-light">Nice <span class="time text-danger">12:02</span></div><br><br>
-                                <div class="message myMessage bg-success text-light">Nice <span class="time text-danger">12:02</span></div><br><br> --}}
+                                --}}
                             </div>
 
                             <div class="sendBox mt-3">

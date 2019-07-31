@@ -138,18 +138,16 @@ const io = socket(server)
     .on("connection", function(socket)
     {
         let today = new Date();
-        let userId = socket.request.session.passport.user;
+        let userId = socket.request.session.passport.user;  //current Active UserId
         sqlDatabaseHandler.makeActive(userId, socket.id);
 
         socket.on("send", function(data)
         {
-            
-            sqlDatabaseHandler.getUserId(data.mobile)
+            sqlDatabaseHandler.getUserId(data.mobile)   //The person to send message to Id
             .then(function(user)
             {
                 if(user)
                 {
-                    // console.log(user.get());
                     sqlDatabaseHandler.getSocketId(user.get().id)
                     .then(function(socketData)
                     {

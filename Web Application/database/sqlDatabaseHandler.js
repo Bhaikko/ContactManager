@@ -1,4 +1,4 @@
-const { Users, Contacts, ActiveUsers} = require("./sqlDatabase");
+const { Users, Contacts, ActiveUsers, Messages} = require("./sqlDatabase");
 
 
 function getUser(username)
@@ -216,6 +216,50 @@ function removeActive(socketId)
     });
 }
 
+function addMessage(userId, contactId, message, time)
+{
+    Messages.create({
+        userId,
+        contactId,
+        message,
+        time
+    });
+}
+// addMessage(1, 1, "Hi ASDA", "12:00");
+// addMessage(2, 2, "Hi Asd", "12:05");
+
+function getMessages(username, phone)
+{
+    return Users.findOne({
+        attributes: ["id"],
+        where: {
+            username 
+        }
+    })
+    .then(function(user)
+    {
+        return Contacts.findOne({
+            attributes: ["id"],
+            where: {
+                userId: user.get().id,
+                phone
+            }
+        })
+        .then(function(contact)
+        {
+            return Messages.findAll({
+                where:  {
+                    userId: user.get().id,
+                    contactId: contact.get().id 
+                }
+            })
+            .then(function(messages)
+            {
+                return messages;
+            })
+        })
+    })
+}
 
 module.exports = {
     addUser, 
@@ -230,5 +274,7 @@ module.exports = {
     checkMobile,
     deleteContact,
     makeActive,
-    removeActive
+    removeActive,
+    getMessages,
+    addMessage
 }

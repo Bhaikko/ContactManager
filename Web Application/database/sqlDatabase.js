@@ -34,7 +34,6 @@ const Contacts = database.define("contacts", {
     },
     phone: {
         type: Sequelize.STRING,
-        primaryKey: true,
         allowNull: false,
     },
     address: {
@@ -62,11 +61,31 @@ const ActiveUsers = database.define("activeUsers", {
 ActiveUsers.belongsTo(Users);
 Users.hasMany(ActiveUsers);
 
+const Messages = database.define("messages", {
+    message: {
+        type: Sequelize.STRING,
+        allowNull: false 
+    },
+    time: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    bSeen: {
+        type: Sequelize.BOOLEAN,
+        allowNull:false,
+        defaultValue: false 
+    }
+});
 
+Messages.belongsTo(Users);
+Messages.belongsTo(Contacts);
+Users.hasMany(Messages);
+Contacts.hasMany(Messages);
 
 module.exports = {  
     database, 
     Users, 
     Contacts,
+    Messages,
     ActiveUsers
 };

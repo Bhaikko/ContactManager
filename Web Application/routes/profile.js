@@ -8,6 +8,7 @@ const route = express.Router();
 route.get("/", function(req, res, next)
 {
     let name = req.user.username;
+    let mobile = req.user.mobile;
     sqlDatabaseHandler.getContacts(req.user.id, true)
     .then(function(contacts)
     {
@@ -15,9 +16,18 @@ route.get("/", function(req, res, next)
         {
             contact.name = contact.name.split(" ")[0];
         });
-        res.render("myhomepage", {name, contacts});
+        res.render("myhomepage", {name, mobile, contacts});
     });
 });
+
+route.post("/myid", function(req, res)
+{
+    sqlDatabaseHandler.getUserId(req.body.mobile)
+    .then(function(user)
+    {
+        res.send(user);
+    });
+})
 
 route.get("/contacts", function(req, res, next)
 {
@@ -33,7 +43,22 @@ route.get("/contacts", function(req, res, next)
         });
         res.render("mycontacts", { renderingContacts, username});
     });
-})
+});
+
+route.post("/messages", function(req, res)
+{
+    sqlDatabaseHandler.getMessages(req.body.username, req.body.currentContact)
+    .then(function(data)
+    {
+        messages = [];
+        data.forEach(function(current, index)
+        {
+            messages[index] = current.get();
+        });
+        res.send(messages);
+       
+    });
+});
 
 route.post("/addContact", uploadHandler.upload.single("profile"), function(req, res, next)
 {
