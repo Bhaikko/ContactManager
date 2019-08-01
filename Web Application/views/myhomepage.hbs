@@ -59,9 +59,10 @@
                             <div class="list-group">
                                 {{#each contacts as |contact|}}
                                         <button type="button" class="list-group-item list-group-item-action selectableContact">
-                                        <img src={{contact.profile}}>
-                                        {{contact.name}}
-                                        <div class="contactNumber" hidden>{{contact.phone}}</div>
+                                            <img src={{contact.profile}}>
+                                            {{contact.name}}
+                                            <div class="contactNumber" hidden>{{contact.phone}}</div>
+                                            <div class="seenStatus" hidden>{{contact.bSeen}}</div>
                                         
                                         </button>
                                 {{/each}}

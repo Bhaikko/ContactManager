@@ -17,10 +17,21 @@ let userSendMessages = null;
 let userRecievedMessages = null;
 let messages = [];
 
+let seenStatus = $(".seenStatus");
+
 jQuery.post("/profile/myid", {mobile}, function(user)
 {
     userId = user.id;    
 });
+
+seenStatus.each(function(index)
+{
+    if(seenStatus[index].innerText == "false")
+    {
+        seenStatus[index].parentNode.classList.add("bg-warning");
+    }
+})
+
 
 selectableContacts.each(function(index)
 {
@@ -29,6 +40,7 @@ selectableContacts.each(function(index)
         $(".inboxBox")[0].removeAttribute("hidden");
         disableOtherContacts();
         selectableContacts[index].classList.add("active");        
+        selectableContacts[index].classList.remove("bg-warning");     //to remove notification signal   
         senderName[0].innerText = selectableContacts[index].innerText;
         senderImage[0].setAttribute("src", selectableContacts[index].children[0].getAttribute("src"));
         $("#status")[0].setAttribute("hidden", "true");
@@ -54,7 +66,7 @@ selectableContacts.each(function(index)
                     {
                         //Request to get sent messages
                         await jQuery.post("/profile/messages", {
-                            username,
+                            mobile,
                             currentContact 
                         },
                         function(sentMessages)
@@ -64,7 +76,7 @@ selectableContacts.each(function(index)
 
                         //Request to get Recieved Messages
                         await jQuery.post("/profile/messages", {
-                            username: selectableContacts[index].innerText.substr(1),
+                            mobile: currentContact,
                             currentContact: mobile 
                         },
                         function(recieveMessages)

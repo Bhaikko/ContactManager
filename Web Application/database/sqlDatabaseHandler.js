@@ -232,16 +232,19 @@ function addMessage(userId, contactId, message, time)
     });
 }
 
-function getMessages(username, phone)
+function getMessages(senderMobile, phone)
 {
     return Users.findOne({
         attributes: ["id"],
         where: {
-            username 
+            mobile: senderMobile 
         }
     })
     .then(function(user)
     {
+        if(!user)
+            return;
+
         return Contacts.findOne({
             attributes: ["id"],
             where: {
@@ -313,5 +316,6 @@ module.exports = {
     addMessage,
     getContactId,
     checkOnline,
-    checkFriend
+    checkFriend,
+    
 }

@@ -10,14 +10,28 @@ route.get("/", function(req, res, next)
     let name = req.user.username;
     let mobile = req.user.mobile;
     sqlDatabaseHandler.getContacts(req.user.id, true)
-    .then(function(contacts)
+    .then(async function(contacts)
     {
-        contacts.map(function(contact)
+        const contactPromises = await contacts.map(async function(contact)
         {
-            contact.name = contact.name.split(" ")[0];
+            contact.get().name = contact.get().name.split(" ")[0]; 
+            await sqlDatabaseHandler.getMessages(contact.phone, mobile)
+            .then(function(messages)
+            {
+                if(messages)
+                {
+                    contact.bSeen = messages[0].get().bSeen;
+                }
+            });
+
         });
-        res.render("myhomepage", {name, mobile, contacts});
+        await Promise.all(contactPromises);
+        await console.log(contacts);
+        await res.render("myhomepage", {name, mobile, contacts});
     });
+       
+    
+            
 });
 
 route.post("/myid", function(req, res)
@@ -34,7 +48,6 @@ route.post("/checkOnline", function(req, res)
     sqlDatabaseHandler.getUserId(req.body.currentContact)
     .then(function(user)
     {
-        // console.log(user);
         sqlDatabaseHandler.checkOnline(user.get().id)
         .then(function(status)
         {
@@ -93,7 +106,7 @@ route.get("/contacts", function(req, res, next)
 
 route.post("/messages", function(req, res)
 {
-    sqlDatabaseHandler.getMessages(req.body.username, req.body.currentContact)
+    sqlDatabaseHandler.getMessages(req.body.mobile, req.body.currentContact)
     .then(function(data)
     {
         messages = [];
