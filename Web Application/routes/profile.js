@@ -26,7 +26,7 @@ route.get("/", function(req, res, next)
 
         });
         await Promise.all(contactPromises);
-        await console.log(contacts);
+        // await console.log(contacts);
         await res.render("myhomepage", {name, mobile, contacts});
     });
        

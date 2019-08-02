@@ -158,11 +158,21 @@ const io = socket(server)
                             sqlDatabaseHandler.getSocketId(user.get().id)
                             .then(function(socketData)
                             {
-                                socket.to(socketData.socketId).emit("recieve", {
-                                    mobile: data.mobile,
-                                    message: data.message,
-                                    time: time
-                                });
+                                if(socketData)
+                                {
+                                    sqlDatabaseHandler.getMobileNumber(userId)
+                                    .then(function(sender)
+                                    {
+                                        socket.to(socketData.socketId).emit("recieve", {
+                                            senderNumber: sender.get().mobile,
+                                            mobile: data.mobile,
+                                            message: data.message,
+                                            time: time
+                                        });
+                                    })
+                                    
+                                }
+                                
                             });
                         }
                     })

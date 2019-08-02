@@ -142,5 +142,17 @@ sendButton.click(function(event)
 })
 socket.on("recieve", function(data)
 {
-    messagesBox.append(`<div class="message notMyMessage bg-secondary text-light">${data.message} <span class="time text-danger">${data.time}</span></div><br><br>`)
+    if(data.senderNumber == currentContact)
+    {
+        messagesBox.append(`<div class="message notMyMessage bg-secondary text-light">${data.message} <span class="time text-danger">${data.time}</span></div><br><br>`)
+    }
+    else 
+    {
+        selectableContacts.each(function(index)
+        {
+            if(selectableContacts[index].children[1].innerText == data.senderNumber)
+                selectableContacts[index].classList.add("bg-warning");
+        })
+    }
+        
 });

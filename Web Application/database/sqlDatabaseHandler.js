@@ -298,6 +298,16 @@ function checkFriend(userId, phone)
     });
 }
 
+function getMobileNumber(userId)
+{
+    return Users.findOne({
+        attributes: ["mobile"],
+        where:  {
+            id: userId
+        }
+    })
+}
+
 module.exports = {
     addUser, 
     addContact, 
@@ -317,5 +327,6 @@ module.exports = {
     getContactId,
     checkOnline,
     checkFriend,
+    getMobileNumber
     
 }
