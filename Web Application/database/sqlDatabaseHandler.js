@@ -254,33 +254,37 @@ function getMessages(senderMobile, phone, bRecieved)
         })
         .then(function(contact)
         {
-            return Messages.findAll({
-                where:  {
-                    userId: user.get().id,
-                    contactId: contact.get().id 
-                }
-            })
-            .then(function(messages)
+            if(contact)
             {
-                if(bRecieved)
+                return Messages.findAll({
+                    where:  {
+                        userId: user.get().id,
+                        contactId: contact.get().id 
+                    }
+                })
+                .then(function(messages)
                 {
-                    return Messages.update({
-                        bSeen: true,
-                    },
+                    if(bRecieved)
                     {
-                        where:  {
-                            userId: user.get().id,
-                            contactId: contact.get().id
-                        }
-                    })
-                    .then(function()
-                    {
+                        return Messages.update({
+                            bSeen: true,
+                        },
+                        {
+                            where:  {
+                                userId: user.get().id,
+                                contactId: contact.get().id
+                            }
+                        })
+                        .then(function()
+                        {
+                            return messages;
+                        })
+                    }
+                    else 
                         return messages;
-                    })
-                }
-                else 
-                    return messages;
-            })
+                })
+            }
+            
         })
     })
 }

@@ -18,7 +18,7 @@ route.get("/", function(req, res, next)
             await sqlDatabaseHandler.getMessages(contact.phone, mobile)
             .then(function(messages)
             {
-                if(messages)
+                if(messages && messages[0])
                 {
                     contact.bSeen = messages[0].get().bSeen;
                 }
@@ -110,10 +110,13 @@ route.post("/messages", function(req, res)
     .then(function(data)
     {
         messages = [];
-        data.forEach(function(current, index)
+        if(data)
         {
-            messages[index] = current.get();
-        });
+            data.forEach(function(current, index)
+            {
+                messages[index] = current.get();
+            });  
+        }
         res.send(messages);
        
     });

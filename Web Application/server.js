@@ -10,6 +10,7 @@ const fs = require("fs");
 //Handlers
 const { database} = require("./database/sqlDatabase");
 const sqlDatabaseHandler = require("./database/sqlDatabaseHandler");
+const mongoDatabaseHandler = require("./database/mongoDatabaseHandler");
 const passport = require("./passport");
 
 //Routers
@@ -120,6 +121,21 @@ app.post("/checkMobile", function(req, res)
 app.get("/logout", function(req, res)
 {
     req.logOut();
+    res.redirect("/");
+});
+
+app.post("/issues", function(req, res)
+{
+    mongoDatabaseHandler.connectdb("contactmanager")
+    .then(function(database)
+    {
+        const issues = database.collection("issues");
+        issues.insertOne({
+            name: req.body.name,
+            email: req.body.email,
+            message: req.body.message 
+        });
+    });
     res.redirect("/");
 });
 

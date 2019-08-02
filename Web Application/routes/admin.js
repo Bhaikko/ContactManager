@@ -19,21 +19,6 @@ route.get("/issues", function(req, res)
     })
 });
 
-route.post("/issues", function(req, res)
-{
-    mongoDatabaseHandler.connectdb("contactmanager")
-    .then(function(database)
-    {
-        const issues = database.collection("issues");
-        issues.insertOne({
-            name: req.body.name,
-            email: req.body.email,
-            message: req.body.message 
-        });
-    });
-    res.redirect("/");
-});
-
 route.delete("/issues", function(req, res)
 {
     mongoDatabaseHandler.connectdb("contactmanager")
