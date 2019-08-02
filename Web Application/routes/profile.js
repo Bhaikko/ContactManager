@@ -106,7 +106,7 @@ route.get("/contacts", function(req, res, next)
 
 route.post("/messages", function(req, res)
 {
-    sqlDatabaseHandler.getMessages(req.body.mobile, req.body.currentContact)
+    sqlDatabaseHandler.getMessages(req.body.mobile, req.body.currentContact, req.body.bRecieved)
     .then(function(data)
     {
         messages = [];

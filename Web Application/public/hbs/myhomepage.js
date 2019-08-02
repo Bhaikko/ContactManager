@@ -67,7 +67,8 @@ selectableContacts.each(function(index)
                         //Request to get sent messages
                         await jQuery.post("/profile/messages", {
                             mobile,
-                            currentContact 
+                            currentContact,
+                            bRecieved: false
                         },
                         function(sentMessages)
                         {
@@ -77,7 +78,8 @@ selectableContacts.each(function(index)
                         //Request to get Recieved Messages
                         await jQuery.post("/profile/messages", {
                             mobile: currentContact,
-                            currentContact: mobile 
+                            currentContact: mobile,
+                            bRecieved: true
                         },
                         function(recieveMessages)
                         {

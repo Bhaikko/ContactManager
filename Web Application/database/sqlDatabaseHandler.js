@@ -232,7 +232,7 @@ function addMessage(userId, contactId, message, time)
     });
 }
 
-function getMessages(senderMobile, phone)
+function getMessages(senderMobile, phone, bRecieved)
 {
     return Users.findOne({
         attributes: ["id"],
@@ -262,7 +262,24 @@ function getMessages(senderMobile, phone)
             })
             .then(function(messages)
             {
-                return messages;
+                if(bRecieved)
+                {
+                    return Messages.update({
+                        bSeen: true,
+                    },
+                    {
+                        where:  {
+                            userId: user.get().id,
+                            contactId: contact.get().id
+                        }
+                    })
+                    .then(function()
+                    {
+                        return messages;
+                    })
+                }
+                else 
+                    return messages;
             })
         })
     })
