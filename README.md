@@ -9,25 +9,26 @@ These instructions will get you a copy of the project up and running on your loc
 Before running the server on your local machine, following *npm packages* must be installed in the same directory where you have cloned the project.
 
 *requirements*
-* node
+* [nodejs](https://nodejs.org)
 * npm
-* mysql
-* mongodb
+* [mysql](https://www.mysql.com)
+* [mongodb](https://www.mongodb.com)
 
 *npm packages*
-* connect-mongo
-* cookie-parser
-* express
-* express-session
-* hbs
-* mongodb
-* multer
-* mysql2
-* passport
-* passport-local
-* passport.socketio
-* sequelize
-* socket.io
+* [connect-mongo](https://www.npmjs.com/package/connect-mongo)
+* [cookie-parser](https://www.npmjs.com/package/cookie-parser)
+* [express](https://www.npmjs.com/package/express)
+* [express-session](https://www.npmjs.com/package/express-session)
+* [hbs](https://www.npmjs.com/package/hbs)
+* [mongodb](https://www.npmjs.com/package/mongodb)
+* [multer](https://www.npmjs.com/package/multer)
+* [mysql2](https://www.npmjs.com/package/mysql2)
+* [passport](https://www.npmjs.com/package/passport)
+* [passport-local](https://www.npmjs.com/package/passport-local)
+* [passport.socketio](https://www.npmjs.com/package/passport.socketio)
+* [sequelize](https://www.npmjs.com/package/sequelize)
+* [socket.io](https://www.npmjs.com/package/socket.io)
+
 You can install them manually or run the following command
 ```
   npm install connect-mongo cookie-parser express express-session hbs mongodb multer mysql2 passport passport-local passport.socketio sequelize socket.io
