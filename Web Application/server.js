@@ -207,7 +207,7 @@ database.sync()
 .then(function()
 {
     console.log("SQL Database Synced");
-    let port = 4000;
+    let port = process.env.PORT || 4000;
     server.listen(port, () => console.log("Server Up And Running On 127.0.0.1:" + port));
 });
 
