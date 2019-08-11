@@ -31,7 +31,7 @@ Before running the server on your local machine, following *npm packages* must b
 
 You can install them manually or run the following command
 ```
-  npm install connect-mongo cookie-parser express express-session hbs mongodb multer mysql2 passport passport-local passport.socketio sequelize socket.io
+  npm install
 ```
 *Database*
 * mysql - For storing Users, Contacts, and Messages.
